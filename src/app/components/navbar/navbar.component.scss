@@ -1,0 +1,30 @@
+@import "../../sass/abstracts/mixins";
+
+nav {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1.25rem 4rem;
+  color: var(--color-light-2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--bg-nav);
+  z-index: 100;
+}
+
+.links-container {
+  @include f-center;
+  gap: 2rem;
+  & > a {
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    &:hover {
+      opacity: .8;
+    }
+  }
+}

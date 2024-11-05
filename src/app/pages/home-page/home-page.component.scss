@@ -1,0 +1,164 @@
+@import "../../sass/abstracts/mixins";
+
+.home {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.top {
+  width: 100%;
+  height: auto;
+  @include f-center;
+  // background-image: url('../../../assets/Main-bg.png');
+  // background-size: cover;
+  // background-position: bottom;
+  position: relative;
+
+  & > img {
+    // position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  &__content {
+    width: 30%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include f-center;
+    flex-direction: column;
+    max-width: 500px;
+
+    & > img {
+      width: 90%;
+      height: 90%;
+    }
+    & > p {
+      font-size: 5rem;
+      font-weight: 700;
+      margin-top: -1rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+.content {
+  width: 100%;
+  height: auto;
+  @include f-center;
+  flex-direction: column;
+  position: relative;
+}
+
+.underground {
+  width: 100%;
+  height: auto;
+  @include f-center;
+  position: relative;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+  }
+  &__content {
+    width: 75%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include f-center;
+    flex-direction: column;
+    max-width: 900px;
+    background: var(--bg-message);
+    backdrop-filter: blur(2px);
+    padding: 3rem;
+    border-radius: 20px;
+    & > span {
+      font-size: 3rem;
+      font-weight: 400;
+      text-align: center;
+    }
+    & > p {
+      text-align: center;
+      font-size: 4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.bins {
+  @include f-center;
+  width: 100%;
+  margin-top: -7rem;
+}
+.bin-container {
+  flex-basis: 15%;
+  &:nth-child(even) {
+    margin-bottom: 5rem;
+  }
+}
+.bin {
+  width: 100%;
+  height: 100%;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 5rem;
+  gap: 4rem;
+  margin-top: 4rem;
+
+  &__text {
+    font-size: 2.4rem;
+    font-weight: 600;
+    text-align: center;
+    color: #000;
+    width: 100%;
+  }
+}
+.pad-container {
+  width: 23%;
+}
+.pad {
+  width: 100%;
+  height: 100%;
+}
+
+.idea {
+  @include f-center;
+  width: 100%;
+  margin-top: 8rem;
+
+  &__box {
+    width: 50%;
+    border-radius: 10px;
+    background: var(--bg-idea);
+    padding: 2.5rem 3.5rem;
+    position: relative;
+  }
+  &__text {
+    color: var(--color-bl_wh);
+    font-size: 2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+.cat {
+  position: absolute;
+  width: 25%;
+  top: 0;
+  left: 0;
+  transform: translate(-20%, -60%);
+}
+

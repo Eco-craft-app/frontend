@@ -1,0 +1,38 @@
+<section class="home">
+  <app-navbar />
+  <div class="top">
+    <img src="assets/Main-bg.png" alt="main" />
+    <div class="top__content">
+      <img src="assets/Recycle.png" alt="recycle" />
+      <p>Eco Freaks</p>
+      <app-button-sign (click)="redirectToKeycloak()">Zaloguj się</app-button-sign>
+    </div>
+  </div>
+  <main class="content">
+    <div class="underground">
+      <img src="assets/Underground.png" alt="underground" />
+      <div class="underground__content">
+        <span>Segregacja odpadów bywa trudna?</span>
+        <p>CZAS TO ZMIENIĆ! {{ profile()?.firstName }}</p>
+      </div>
+    </div>
+    <div class="bins">
+      <div class="bin-container"><img src="assets/Yellow-bin.png" alt="Yellow-bin" class="bin" /></div>
+      <div class="bin-container"><img src="assets/Brown-bin.png" alt="Brown-bin" class="bin" /></div>
+      <div class="bin-container"><img src="assets/Green-bin.png" alt="Green-bin" class="bin" /></div>
+      <div class="bin-container"><img src="assets/Black-bin.png" alt="Black-bin" class="bin" /></div>
+      <div class="bin-container"><img src="assets/Blue-bin.png" alt="Blue-bin" class="bin" /></div>
+    </div>
+    <div class="info">
+      <div class="pad-container"><img src="assets/Left-pad.png" alt="Left-pad" class="pad"></div>
+      <p class="info__text">Nie wiesz do którego pojemnika wrzucić  swoje odpady? Nasza aplikacja przychodzi z pomocą! Zrób zdjęcie danego odpadu, a sztuczna inteligencja podpowie do którego pojemnika należy go wrzucić</p>
+      <div class="pad-container"><img src="assets/Right-pad.png" alt="Left-pad" class="pad"></div>
+    </div>
+    <div class="idea">
+      <div class="idea__box">
+        <img src="assets/Cat.png" alt="Cat" class="cat">
+        <p class="idea__text">MOŻE JEDNAK CIĘ TO NIE SATYSFAKCJONUJE? PRZEDSTAWIAMY MODEL UPCYCLING ZA KTÓRY MOŻESZ ZDOBYWAĆ PUNKTY W NASZEJ APLIKACJI</p>
+      </div>
+    </div>
+  </main>
+</section>

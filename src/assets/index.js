@@ -1,0 +1,13 @@
+export { default as Bird } from './Bird.png';
+export { default as BlackBin } from './Black-bin.png';
+export { default as BlueBin } from './Blue-bin.png';
+export { default as BrownBin } from './Brown-bin.png';
+export { default as Cat } from './Cat.png';
+export { default as GreenBin } from './Green-bin.png';
+export { default as LeftPad } from './Left-pad.png';
+export { default as MainBg } from './Main-bg.png';
+export { default as Palletes } from './Palletes.png';
+export { default as Recycle } from './Recycle.png';
+export { default as RightPad } from './Right-pad.png';
+export { default as Underground } from './Underground.png';
+export { default as YellowBin } from './Yellow-bin.png';

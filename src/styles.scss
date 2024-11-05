@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../src/app/sass/abstracts/mixins';
+
+:root {
+  --color-light-2: #ddd;
+  --color-base: #d8f3dc;
+  --bg-btnSign: #1b4332;
+  --bg-btnSign-hover: #142d23;
+  --bg-color: #fff;
+  --bg-message: #d9d9d980;
+  --font-base: "Poppins", sans-serif;
+}
+[data-theme="light"] {
+  --bg-color: #fff;
+  --bg-nav: #a9a9a980;
+  --color-bl_wh: #ddd;
+  --bg-idea: #000000CC;
+}
+[data-theme="dark"] {
+  --bg-color: #000;
+  --bg-nav: #28282880;
+  --color-bl_wh: #111;
+  --bg-idea: #ffffffCC;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+
+  @include respond(tab-land) {
+    font-size: 50%;
+  }
+
+  @include respond(tab-port) {
+    font-size: 40%;
+  }
+
+  @include respond(big-phone) {
+    font-size: 30%;
+  }
+
+  @include respond(phone) {
+    font-size: 22.5%;
+  }
+
+  @include respond(big-desktop) {
+    font-size: 75%;
+  }
+}
+
+body {
+  font-size: 1.6rem;
+  font-weight: 400;
+  font-family: var(--font-base);
+  color: var(--color-base);
+  // overflow-x: hidden;
+}
