@@ -22,6 +22,9 @@ export class AuthGuard extends KeycloakAuthGuard {
     state: RouterStateSnapshot
   ) {
     // Force the user to log in if currently unauthenticated.
+    if(this.authenticated) {
+      this.router.navigate(['/recycle']);
+    }
     if (!this.authenticated) {
       await this.keycloak.login({
         redirectUri: 'http://localhost:4200/recycle',

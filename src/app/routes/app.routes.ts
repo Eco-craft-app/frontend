@@ -6,6 +6,7 @@ import { inject } from '@angular/core';
 import { KeycloakService } from '../keycloak.service';
 import { AuthGuard } from '../guards/auth.guard';
 import { LoginComponent } from '../components/login/login.component';
+import { LoginGuard } from '../guards/login.guard';
 
 const isLoggedIn: CanMatchFn = (route, segments) => {
   const keycloakService = inject(KeycloakService);
@@ -36,6 +37,7 @@ export const routes: Routes = [
     path: 'recycle',
     component: RecycleComponent,
     loadChildren: () => import('./recycle.routes').then((m) => m.recycleRoutes),
+    canActivate: [LoginGuard]
     // canMatch: [isLoggedIn]
   },
   {
