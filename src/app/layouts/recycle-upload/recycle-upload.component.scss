@@ -1,0 +1,12 @@
+.recycle-upload {
+  &__dropzone {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    height: 40rem;
+    width: 80%;
+  }
+}

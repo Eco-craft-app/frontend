@@ -1,0 +1,38 @@
+.primary-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.5rem 2.5rem;
+  background: var(--bg-prim-nav);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 7rem;
+}
+.logo p {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-bl_wh);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+
+  & .link {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-bl_wh);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s;
+
+    &:hover {
+      color: rgb(136, 213, 136);
+    }
+  }
+}

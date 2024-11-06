@@ -1,0 +1,43 @@
+<section class="recycle-upload">
+  <header class="recycle-upload__header">
+    <h1>Create a new project</h1>
+  </header>
+  <div class="recycle-upload__content">
+    <div class="recycle-upload__content-head">
+      <ngx-dropzone
+        [maxFileSize]="1000000"
+        [accept]="'image/*'"
+        (change)="onSelect($event)"
+        class="recycle-upload__dropzone"
+      >
+        <ngx-dropzone-label>
+          <p>Drag your photos and drop em here</p>
+          <span>or</span>
+          <p>Click on the box and get it from your computer</p>
+        </ngx-dropzone-label>
+        @for (file of files(); track $index) {
+        <ngx-dropzone-preview [removable]="true" (removed)="onRemove(file)">
+          <ngx-dropzone-label>
+            <p>{{ file.name }} {{ file.type }}</p>
+          </ngx-dropzone-label>
+        </ngx-dropzone-preview>
+        }
+      </ngx-dropzone>
+      <button (click)="uploadFiles()">Upload Files</button>
+      <p>Drag your photos and drop em here</p>
+      <span>or</span>
+      <p>Select from</p>
+      <input type="file" accept=".png, .jpeg, .jpg" style="display: none" />
+      <button
+        type="button"
+        onclick="document.querySelector('input[type=file]').click();"
+      >
+        Choose File
+      </button>
+    </div>
+  </div>
+  <div class="recycle-upload__preview">
+    <h2>Selected Photos</h2>
+    <div id="preview"></div>
+  </div>
+</section>

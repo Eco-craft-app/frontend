@@ -20,15 +20,18 @@ export class HomePageComponent {
 
   async redirectToKeycloak() {
     try {
+      localStorage.setItem('redirectUrl', '/home'); // Zapisanie ścieżki do przekierowania po zalogowaniu
       await this.keycloakService.init(); // Inicjalizacja Keycloak tylko raz
       const isAuthenticated = this.keycloakService.isAuthenticated();
+      localStorage.setItem('isAuthenticated', 'authenticated');
   
-      if (!isAuthenticated) {
-        await this.keycloakService.login(); // Tylko jeśli nie jest zalogowany
-      } else {
-        console.log('User is already authenticated');
-      }
+      // if (!isAuthenticated) {
+      //   await this.keycloakService.login(); // Tylko jeśli nie jest zalogowany
+      // } else {
+      //   console.log('User is already authenticated');
+      // }
     } catch (error) {
+      localStorage.setItem('error', 'err');
       console.error('Error during Keycloak authentication', error);
     }
   }

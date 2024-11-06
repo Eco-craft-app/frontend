@@ -19,22 +19,42 @@ export class KeycloakService {
         })
       );
     }
+    localStorage.setItem('keycloakGetter', JSON.stringify(this._keycloak()));
     return this._keycloak();
   }
 
   profile = this._profile.asReadonly();
 
   async init() {
-    const authenticated = await this.keycloak?.init({
-      onLoad: 'login-required',
-      redirectUri: 'http://localhost:4200/recycle'
-    });
+    let key = this._keycloak();
+    if (!this._keycloak()) {
+      key = new Keycloak({
+        url: 'http://localhost:18080',
+        realm: 'recycle',
+        clientId: 'public-client',
+      });
+      this._keycloak.set(key);
+    }
+    localStorage.setItem('keycloakGet', JSON.stringify(this.keycloak));
+    localStorage.setItem('keycloak', JSON.stringify('keycloak'));
+    const authenticated = await key
+      ?.init({
+        // onLoad: 'login-required',
+        // redirectUri: 'http://localhost:4200/recycle',
+        onLoad: 'check-sso', // Możesz zmienić na 'check-sso', jeśli login-required powoduje problemy
+        checkLoginIframe: false,
+      })
+      .catch((error) => {
+        localStorage.setItem('error', JSON.stringify(error));
+      });
 
     console.log('Authenticated:', authenticated);
+    localStorage.setItem('authenticated', JSON.stringify(authenticated));
 
     if (authenticated) {
       const profile = await this.keycloak?.loadUserProfile();
       if (profile) {
+        localStorage.setItem('profile', JSON.stringify(profile));
         this._profile.set({
           ...profile,
           token: this.keycloak?.token,
@@ -47,9 +67,10 @@ export class KeycloakService {
 
   isAuthenticated(): boolean {
     return this.keycloak?.authenticated || false; // Zakładając, że `authenticated` jest właściwością Keycloak
-  }  
+  }
 
   login() {
+    localStorage.setItem('login', JSON.stringify('login'));
     return this.keycloak?.login({
       redirectUri: 'http://localhost:4200/recycle',
     });
