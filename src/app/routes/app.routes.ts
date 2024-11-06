@@ -4,6 +4,8 @@ import { ErrorComponent } from '../components/error/error.component';
 import { RecycleComponent } from '../pages/recycle/recycle.component';
 import { inject } from '@angular/core';
 import { KeycloakService } from '../keycloak.service';
+import { AuthGuard } from '../guards/auth.guard';
+import { LoginComponent } from '../components/login/login.component';
 
 const isLoggedIn: CanMatchFn = (route, segments) => {
   const keycloakService = inject(KeycloakService);
@@ -23,6 +25,12 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomePageComponent,
+    // canActivate: [AuthGuard],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'recycle',

@@ -7,11 +7,11 @@ import {
 
 import { routes } from './routes/app.routes';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
-import { KeycloakService } from './keycloak.service';
-
-function kcFactory(keycloakService: KeycloakService) {
-  return () => keycloakService.init();
-}
+import { provideClientHydration } from '@angular/platform-browser';
+import { KeycloakService, KeycloakBearerInterceptor } from "keycloak-angular";
+import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
+import { initializeKeycloak } from "./init/keycloak-init.factory";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,10 +24,17 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(),
     HttpClient,
+    provideAnimationsAsync(),
+    KeycloakService,
     {
       provide: APP_INITIALIZER,
+      useFactory: initializeKeycloak,
+      multi: true,
       deps: [KeycloakService],
-      useFactory: () => kcFactory, // No redirection to Keycloak on app load
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: KeycloakBearerInterceptor,
       multi: true,
     },
   ],

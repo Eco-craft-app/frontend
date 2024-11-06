@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { ButtonSignComponent } from "../../shared/button-sign/button-sign.component";
 import { KeycloakService } from '../../keycloak.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-page',
@@ -12,27 +13,14 @@ import { KeycloakService } from '../../keycloak.service';
 })
 export class HomePageComponent {
   private keycloakService = inject(KeycloakService);
+  private router = inject(Router);
   profile = this.keycloakService.profile
 
   ngAfterViewInit() {
     console.log(this.keycloakService.profile())
   }
 
-  async redirectToKeycloak() {
-    try {
-      localStorage.setItem('redirectUrl', '/home'); // Zapisanie ścieżki do przekierowania po zalogowaniu
-      await this.keycloakService.init(); // Inicjalizacja Keycloak tylko raz
-      const isAuthenticated = this.keycloakService.isAuthenticated();
-      localStorage.setItem('isAuthenticated', 'authenticated');
-  
-      // if (!isAuthenticated) {
-      //   await this.keycloakService.login(); // Tylko jeśli nie jest zalogowany
-      // } else {
-      //   console.log('User is already authenticated');
-      // }
-    } catch (error) {
-      localStorage.setItem('error', 'err');
-      console.error('Error during Keycloak authentication', error);
-    }
+  loginRedirect() {
+    this.router.navigate(['/login'])
   }
 }
