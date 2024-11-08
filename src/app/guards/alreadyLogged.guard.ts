@@ -6,7 +6,7 @@ import { KeycloakService } from 'keycloak-angular';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginGuard implements CanActivate {
+export class AlreadyLoggedGuard implements CanActivate {
 
   constructor(private keycloakService: KeycloakService, private router: Router) {}
 
@@ -16,6 +16,7 @@ export class LoginGuard implements CanActivate {
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.keycloakService.isLoggedIn()) {
       // console.log('User is logged in');
+      this.router.navigate(['/recycle']);
       return true;
     } else {
       this.router.navigate(['/login']);

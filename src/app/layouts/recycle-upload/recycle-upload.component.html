@@ -1,43 +1,30 @@
-<section class="recycle-upload">
-  <header class="recycle-upload__header">
-    <h1>Create a new project</h1>
-  </header>
-  <div class="recycle-upload__content">
-    <div class="recycle-upload__content-head">
-      <ngx-dropzone
-        [maxFileSize]="1000000"
-        [accept]="'image/*'"
-        (change)="onSelect($event)"
-        class="recycle-upload__dropzone"
-      >
-        <ngx-dropzone-label>
-          <p>Drag your photos and drop em here</p>
-          <span>or</span>
-          <p>Click on the box and get it from your computer</p>
-        </ngx-dropzone-label>
-        @for (file of files(); track $index) {
-        <ngx-dropzone-preview [removable]="true" (removed)="onRemove(file)">
-          <ngx-dropzone-label>
-            <p>{{ file.name }} {{ file.type }}</p>
-          </ngx-dropzone-label>
-        </ngx-dropzone-preview>
-        }
-      </ngx-dropzone>
-      <button (click)="uploadFiles()">Upload Files</button>
-      <p>Drag your photos and drop em here</p>
-      <span>or</span>
-      <p>Select from</p>
-      <input type="file" accept=".png, .jpeg, .jpg" style="display: none" />
-      <button
-        type="button"
-        onclick="document.querySelector('input[type=file]').click();"
-      >
-        Choose File
+<div class="recycle-upload-container">
+  <section class="recycle-upload">
+    <header class="recycle-upload__header">
+      <h1>Create a new project</h1>
+    </header>
+    <div class="header-divider"></div>
+    <div class="recycle-upload__content">
+      <p class="photos-header">Upload your photos using the button below</p>
+      <button id="upload_widget" (click)="openWidget()" class="recycle-main-btn">
+        Upload files
       </button>
+      <p class="photos-info"><span class="notice">Notice!</span> Your first photo that you upload will be the main image on your project.</p>
+      <span class="photos-info-remember"><b>REMEMBER</b> to click done, it will upload your chosen photos, be determined because you can upload your photos only once</span>
     </div>
-  </div>
-  <div class="recycle-upload__preview">
-    <h2>Selected Photos</h2>
-    <div id="preview"></div>
-  </div>
-</section>
+    <div class="recycle-upload__basicInfo">
+      <h1>Basic Information</h1>
+      <form [formGroup]="form" (ngSubmit)="onAddProject()" class="project-info-form">
+        <div class="input-box">
+          <label for="title">Title</label>
+          <input formControlName="title" type="text" id="title" placeholder="Enter title" class="project-info-input"/>
+        </div>
+        <div class="input-box">
+          <label for="description">Description</label>
+          <textarea formControlName="description" rows="6" id="description" class="project-info-input"></textarea>
+        </div>
+        <button type="submit" class="recycle-main-btn">Add project</button>
+      </form>
+    </div>
+  </section>
+</div>

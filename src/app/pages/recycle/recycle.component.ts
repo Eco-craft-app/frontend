@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 
 import { PrimaryNavComponent } from "../../components/primary-nav/primary-nav.component";
 import { RouterOutlet } from '@angular/router';
@@ -13,8 +13,11 @@ import { KeycloakOperationService } from '../../services/keycloak.service';
 })
 export class RecycleComponent {
   private keycloakService = inject(KeycloakOperationService);
-  profile = computed(() => this.keycloakService.getUserProfile())
-  ngOnInit() {
-    console.log(this.profile())
+
+  userData = signal<undefined | any>(undefined);
+
+  async ngOnInit() {
+    this.userData.set(await this.keycloakService.getUserDatas())
+    console.log(this.userData())
   }
 }

@@ -1,5 +1,5 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { KeycloakService } from '../../keycloak.service';
 
 @Component({
   selector: 'app-recycle-main',
@@ -9,8 +9,10 @@ import { KeycloakService } from '../../keycloak.service';
   styleUrl: './recycle-main.component.scss'
 })
 export class RecycleMainComponent {
-  private keycloakService = inject(KeycloakService);
+  private httpClient = inject(HttpClient);
   ngOnInit() {
-    console.log(this.keycloakService.profile());
+    this.httpClient.get('https://localhost:5001/api/projects?page=1&pageSize=5').subscribe((response) => {
+      console.log(response);
+    });
   }
 }

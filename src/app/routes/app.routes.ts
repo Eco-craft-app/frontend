@@ -3,19 +3,10 @@ import { HomePageComponent } from '../pages/home-page/home-page.component';
 import { ErrorComponent } from '../components/error/error.component';
 import { RecycleComponent } from '../pages/recycle/recycle.component';
 import { inject } from '@angular/core';
-import { KeycloakService } from '../keycloak.service';
 import { AuthGuard } from '../guards/auth.guard';
 import { LoginComponent } from '../components/login/login.component';
 import { LoginGuard } from '../guards/login.guard';
-
-const isLoggedIn: CanMatchFn = (route, segments) => {
-  const keycloakService = inject(KeycloakService);
-  const router = inject(Router);
-  if (keycloakService.profile()) {
-    return true;
-  }
-  return new RedirectCommand(router.parseUrl('/home'));
-};
+import { AlreadyLoggedGuard } from '../guards/alreadyLogged.guard';
 
 export const routes: Routes = [
   {
@@ -37,7 +28,7 @@ export const routes: Routes = [
     path: 'recycle',
     component: RecycleComponent,
     loadChildren: () => import('./recycle.routes').then((m) => m.recycleRoutes),
-    canActivate: [LoginGuard]
+    canActivate: [LoginGuard],
     // canMatch: [isLoggedIn]
   },
   {

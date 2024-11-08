@@ -11,8 +11,17 @@ export class KeycloakOperationService {
   logout(): void {
     this.keycloak.logout();
   }
-  getUserProfile(): any {
-    return this.keycloak.loadUserProfile();
+  async getUserProfile() {
+    const profile = await this.keycloak.loadUserProfile();
+    return profile
+  }
+  async getUserTokens() {
+    return await this.keycloak.getToken();
+  }
+  async getUserDatas() {
+    const profile = await this.keycloak.loadUserProfile();
+    const token = await this.keycloak.getToken();
+    return { profile, token }
   }
   // Add other methods as needed for token access, user info retrieval, etc.}
 }

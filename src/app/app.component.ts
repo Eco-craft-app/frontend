@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeComponent } from "./components/theme/theme.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
-import { KeycloakService } from './keycloak.service';
 
 @Component({
   selector: 'app-root',

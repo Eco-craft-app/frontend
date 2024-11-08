@@ -1,49 +1,35 @@
 import { Component, inject, signal } from '@angular/core';
 import { NgxDropzoneModule, NgxDropzoneChangeEvent } from 'ngx-dropzone';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CloudinaryUploadService } from '../../services/cloudinary-upload.service';
 
 
 @Component({
   selector: 'app-recycle-upload',
   standalone: true,
-  imports: [NgxDropzoneModule],
+  imports: [NgxDropzoneModule, ReactiveFormsModule],
   templateUrl: './recycle-upload.component.html',
   styleUrl: './recycle-upload.component.scss',
 })
 export class RecycleUploadComponent {
   private cloudinaryService = inject(CloudinaryUploadService)
   files = signal<any>([]);
-  myWidget: any;
+  form = new FormGroup({
+    title: new FormControl(''),
+    description: new FormControl(''),
+  });
 
-  onSelect(event: NgxDropzoneChangeEvent) {
-    console.log(event);
-    this.files.update(files => [...files, ...event.addedFiles]);
-  }
-  onRemove(event: any) {
-    console.log(event);
-    this.files.update(files => files.filter((file: any) => file.name !== event.name));
-  }
-
-  uploadFiles() {
-    if (!this.files().length) {
-      alert('No files to upload');
+  onAddProject() {
+    if(this.cloudinaryService.imagesInfo().length === 0) {
+      alert('Upload at least one image');
+      return;
     }
-    for(let i = 0; i < this.files().length; i++) {
-      const file_data = this.files()[i];
-      console.log(this.files())
-      console.log(file_data)
-      const data = new FormData();
-      data.append('file', file_data);
-      data.append('upload_preset', 'new-project')
+    
+    console.log(this.form.value);
+    console.log(this.cloudinaryService.imagesInfo())
+  }
 
-      console.log([...(data as any).entries()]);
-
-      this.cloudinaryService.uploadImage(data).subscribe((res) => {
-        console.log(res);
-      }, (err) => {
-        console.log(err);
-      })
-
-    }
+  openWidget() {
+    this.cloudinaryService.openWidget()
   }
 }

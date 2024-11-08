@@ -5,7 +5,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
     keycloak.init({
       config: {
         url: 'http://localhost:18080',
-        realm: 'recycle',
+        realm: 'recycle-app',
         clientId: 'public-client',
       },
       enableBearerInterceptor: true,

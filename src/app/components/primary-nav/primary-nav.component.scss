@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: space-between;
   height: 7rem;
+  z-index: 100;
 }
 .logo p {
   font-size: 2.5rem;
@@ -30,9 +31,16 @@
     text-decoration: none;
     cursor: pointer;
     transition: color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover {
       color: rgb(136, 213, 136);
     }
   }
+}
+
+.profile span {
+  font-size: 3rem;
 }

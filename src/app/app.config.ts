@@ -36,6 +36,6 @@ export const appConfig: ApplicationConfig = {
       provide: HTTP_INTERCEPTORS,
       useClass: KeycloakBearerInterceptor,
       multi: true,
-    },
+    }, provideAnimationsAsync(),
   ],
 };

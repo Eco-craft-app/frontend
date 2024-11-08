@@ -1,11 +1,50 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the theme object.
+$HackHeroes-theme: mat.define-theme((
+  color: (
+    theme-type: light,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  density: (
+    scale: 0,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+:root {
+  @include mat.all-component-themes($HackHeroes-theme);
+}
+
+// Comment out the line below if you want to use the pre-defined typography utility classes.
+// For more information: https://material.angular.io/guide/typography#using-typography-styles-in-your-application.
+// @include mat.typography-hierarchy($HackHeroes-theme);
+
+// Comment out the line below if you want to use the deprecated `color` inputs.
+// @include mat.color-variants-backwards-compatibility($HackHeroes-theme);
 @import '../src/app/sass/abstracts/mixins';
 
 :root {
   --color-light-2: #ddd;
   --color-base: #d8f3dc;
+  --color-dark: #111;
   --bg-btnSign: #1b4332;
   --bg-btnSign-hover: #142d23;
+  --bg-upload-btn: rgb(63, 154, 63);
   --bg-color: #fff;
+  --bg-recycle-main: #ddd;
   --bg-message: #d9d9d980;
   --font-base: "Poppins", sans-serif;
   --color-recycle-main: #081C15;
@@ -48,9 +87,9 @@ html {
     font-size: 30%;
   }
 
-  @include respond(phone) {
-    font-size: 22.5%;
-  }
+  // @include respond(phone) {
+  //   font-size: 22.5%;
+  // }
 
   @include respond(big-desktop) {
     font-size: 75%;
@@ -64,3 +103,23 @@ body {
   color: var(--color-base);
   // overflow-x: hidden;
 }
+
+.recycle-main-btn {
+  padding: 1.5rem 2.5rem;
+    background-color: var(--bg-upload-btn);
+    color: #eee;
+    font-size: 1.8rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all .3s;
+    margin-top: 2rem;
+
+    &:hover {
+      background-color: rgb(27, 103, 27);
+    }
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
