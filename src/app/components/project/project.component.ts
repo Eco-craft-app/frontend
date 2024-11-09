@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Project } from '../../models/project.model';
 
 @Component({
   selector: 'app-project',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './project.component.scss'
 })
 export class ProjectComponent {
-  
+  projectData = input.required<Project>()
 }

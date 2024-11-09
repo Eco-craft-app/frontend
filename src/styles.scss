@@ -48,7 +48,10 @@ $HackHeroes-theme: mat.define-theme((
   --bg-message: #d9d9d980;
   --font-base: "Poppins", sans-serif;
   --color-recycle-main: #081C15;
-
+  --color-green-mint: #52B788;
+  --color-green-mint-lowOp: #59c79454;
+  --color-green-weathered: #D8F3DC;
+  --color-green-light: #3eae44;
 }
 [data-theme="light"] {
   --bg-color: #fff;
@@ -119,6 +122,14 @@ body {
     &:hover {
       background-color: rgb(27, 103, 27);
     }
+}
+.truncated-text {
+  overflow: hidden;             /* Ukrywa nadmiarowy tekst */
+  text-overflow: ellipsis;      /* Wyświetla '...' na końcu tekstu */
+  display: -webkit-box;         /* Tworzy kontener na kilka linii */
+  -webkit-line-clamp: 3;        /* Maksymalna liczba linii */
+  -webkit-box-orient: vertical; /* Ustala orientację na pionową */
+  white-space: normal;          /* Pozwala na zawijanie tekstu */
 }
 
 html, body { height: 100%; }

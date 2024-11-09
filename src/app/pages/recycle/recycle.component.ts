@@ -17,6 +17,8 @@ export class RecycleComponent {
   userData = signal<undefined | any>(undefined);
 
   async ngOnInit() {
+    const token = await this.keycloakService.getUserTokens()
+    localStorage.setItem('userToken', JSON.stringify(token))
     this.userData.set(await this.keycloakService.getUserDatas())
     console.log(this.userData())
   }

@@ -1,1 +1,18 @@
-<p>project works!</p>
+<div class="project">
+  <div class="project__img-container">
+    <img [src]="projectData().photoUrl" alt="project-img">
+  </div>
+  <div class="project__content">
+    <div class="project__user-profile-box">
+      <img src="assets/Girl-profile.jpg" alt="user-profile">
+    </div>
+    <div class="project__info-box">
+      <p class="project__title truncated-text">{{ projectData().title }}</p>
+    </div>
+    <div class="project__heart-box">
+      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">
+        favorite
+      </span>
+    </div>
+  </div>
+</div>

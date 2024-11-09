@@ -11,6 +11,8 @@
     </p>
   </div>
   <div class="recycle-main__projects">
-    
+    @for (project of projects(); track project.projectId) {
+      <app-project [projectData]="project"></app-project>
+    }
   </div>
 </section>

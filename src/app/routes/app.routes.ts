@@ -28,7 +28,7 @@ export const routes: Routes = [
     path: 'recycle',
     component: RecycleComponent,
     loadChildren: () => import('./recycle.routes').then((m) => m.recycleRoutes),
-    canActivate: [LoginGuard],
+    // canActivate: [LoginGuard],
     // canMatch: [isLoggedIn]
   },
   {
