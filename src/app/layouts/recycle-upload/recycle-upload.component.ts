@@ -52,7 +52,7 @@ export class RecycleUploadComponent {
     };
     const token = JSON.parse(localStorage.getItem('userToken')!); // Zmienna przechowująca Twój Bearer Token
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
+      'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json', // (opcjonalnie) w zależności od potrzeb API
     });
     console.log(token)

@@ -1,18 +1,29 @@
 <div class="project">
-  <div class="project__img-container">
+  <div class="project__img-container" (click)="projectRedirect($event)">
     <img [src]="projectData().photoUrl" alt="project-img">
-  </div>
-  <div class="project__content">
-    <div class="project__user-profile-box">
-      <img src="assets/Girl-profile.jpg" alt="user-profile">
+    <div class="avatar-box project-icon">
+      <img [src]="projectData().userAvatarUrl" alt="user-profile" (click)="userProfileRedirect()">
+      <a class="username" [routerLink]="['/recycle', 'profile', projectData().userId]">{{ projectData().userName }}</a>
     </div>
-    <div class="project__info-box">
-      <p class="project__title truncated-text">{{ projectData().title }}</p>
-    </div>
-    <div class="project__heart-box">
-      <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">
+    <div class="likes-box project-icon" (click)="toggleLike()" [routerLink]="['/recycle']">
+      <span [class]="['likes-box__icon', 'material-symbols-outlined', projectData().isLikedByTheCurrentUser === true ? 'liked' : '']" >
         favorite
       </span>
+      <span class="likes-box__count">{{ projectData().likeCount | shortenNumber }}</span>
+    </div>
+    <div class="comment-box project-icon">
+      <svg class="comment" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M880-80 720-240H320q-33 0-56.5-23.5T240-320v-40h440q33 0 56.5-23.5T760-440v-280h40q33 0 56.5 23.5T880-640v560ZM160-473l47-47h393v-280H160v327ZM80-280v-520q0-33 23.5-56.5T160-880h440q33 0 56.5 23.5T680-800v280q0 33-23.5 56.5T600-440H240L80-280Zm80-240v-280 280Z"/></svg>
     </div>
   </div>
+  <a class="project__title">{{ projectData().title }}</a>
 </div>
+
+<!-- <div class="project__heart-box">
+  <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">
+    favorite
+  </span>
+</div> -->
+
+<!-- <div class="project__user-profile-box">
+  <img src="assets/Girl-profile.jpg" alt="user-profile">
+</div> -->

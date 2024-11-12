@@ -1,16 +1,46 @@
 <nav class="primary-nav">
-  <div class="logo">
+  <div class="logo" [routerLink]="'/recycle'">
     <p>Eco-freaks</p>
   </div>
+  <div class="input-box">
+    <input type="text" placeholder="wyszukaj..." (input)="onSearchChange($event)">
+    <span class="material-symbols-outlined">
+      search
+    </span>
+  </div>
   <div class="content">
-    <app-theme/>
     <a class="link">Odkryj</a>
     <a class="link">ECO Helper</a>
-    <a class="link add" [routerLink]="['/recycle/upload']">Dodaj</a>
-    <a class="link profile">
-      <span class="material-symbols-outlined">
-        person
-      </span>
-    </a>
+    <div>
+      <a class="link add" [routerLink]="['/recycle/upload']">Dodaj</a>
+    </div>
+    <div class="link-wrapper">
+      @if(userProfile()) {
+        <button class="link profile" (click)="toggleUserInfoPopup($event)">
+          <span class="material-symbols-outlined">
+            person
+          </span>
+        </button>
+        @if(isUserInfoVisible()) {
+          <div class="profile-popup userInfo-popup">
+            <a class="profile-link" [routerLink]="'/recycle/' + 'profile/' + userProfile().id">View Profile</a>
+            <a class="profile-link" (click)="logout()">Wyloguj</a>
+          </div>
+        }
+      } @else {
+        <button class="link profile" (click)="toggleLoginPopup($event)">
+          Zarejestruj się
+          
+        </button>
+        @if(isLoginVisible()) {
+          <div class="profile-popup">
+            <p>Nie posiadasz konta?</p>
+            <a class="signup" (click)="onRegister()">Zarejestruj się</a>
+            <div class="profile-divider"></div>
+            <a class="login-link" [routerLink]="['/login']">Zaloguj się</a>
+          </div>
+        }
+      }
+    </div>
   </div>
 </nav>

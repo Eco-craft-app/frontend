@@ -4,15 +4,43 @@
       <span class="ECO">ECO Helper</span>,<br> Pomocnik który podpowie co zrobić z śmieciami!
     </p>
     <div class="eco-helper_container">
-      <img src="assets/ECO-Helper.png" class="eco-helper" alt="eco-helper">
+      <button class="eco-helper-btn">Sprawdź Teraz</button>
+      <img src="assets/Recycle-bot.png" class="eco-helper" alt="eco-helper">
     </div>
     <p class="persuade">
       Wypróbuj go już teraz i zobacz że segregacja wcale taka trudna nie jest
     </p>
   </div>
+
+  <div class="search-sort-container">
+    <button (click)="toggleSortOrder()">
+      Sortuj po popularności: {{ sortOrder() === 'asc' ? 'Rosnąco' : 'Malejąco' }}
+    </button>
+  </div>
+
   <div class="recycle-main__projects">
     @for (project of projects(); track project.projectId) {
       <app-project [projectData]="project"></app-project>
     }
   </div>
+
+  @if (numberOfPages() > 1) {
+    <div class="recycle-main__arrows-box">
+      <button [class]="'recycle-main__arrow ' + (pageNumber() === 1 ? 'disable' : '')" (click)="pageNumber() === 1 ? null : prevFirstPage()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-240H80v-480h80v480Zm320 0L240-480l240-240 56 56-143 144h487v80H393l144 144-57 56Z"/></svg>
+      </button>
+      <button [class]="'recycle-main__arrow ' + (pageNumber() === 1 ? 'disable' : '')" (click)="pageNumber() === 1 ? null : prevPage()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M360-200 80-480l280-280 56 56-183 184h647v80H233l184 184-57 56Z"/></svg>
+      </button>
+      @for(page of shownArrayPages; track $index) {
+        <button [class]="'recycle-main__page ' + (pageNumber() === page ? 'active' : '')" (click)="changePage(page)">{{ page }}</button>
+      }
+      <button [class]="'recycle-main__arrow ' + (pageNumber() === numberOfPages() ? 'disable' : '')" (click)="pageNumber() === numberOfPages() ? null : nextPage()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="m600-200-57-56 184-184H80v-80h647L544-704l56-56 280 280-280 280Z"/></svg>
+      </button>
+      <button [class]="'recycle-main__arrow ' + (pageNumber() === numberOfPages() ? 'disable' : '')" (click)="pageNumber() === numberOfPages() ? null : nextLastPage()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M800-240v-480h80v480h-80Zm-320 0-57-56 144-144H80v-80h487L424-664l56-56 240 240-240 240Z"/></svg>
+      </button>
+    </div>
+  }
 </section>

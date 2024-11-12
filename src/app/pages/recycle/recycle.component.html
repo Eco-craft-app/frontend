@@ -1,4 +1,10 @@
 <div class="recycle">
+  @if (!isProfileSet() && isLoggedIn()) {
+    <div class="notification-bar">
+      <p>Żeby korzystać z pełnej funkcjonalności strony dokończ konfigurację profilu</p>
+      <a [routerLink]="['/recycle/' + userData()?.profile.username + '/edit']">Dokończ konfigurację</a>
+    </div>
+  }
   <app-primary-nav/>
   <router-outlet/>
 </div>

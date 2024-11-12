@@ -1,0 +1,198 @@
+@import "../../sass/abstracts/mixins";
+
+:host {
+  height: 100%;
+  width: 100%;
+}
+.recycle-user-edit {
+  width: 100%;
+  height: 100%;
+  margin-top: 7rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 3rem;
+  margin-top: 7rem;
+  color: #111;
+
+  &__header {
+    align-self: flex-start;
+    color: var(--color-dark);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.02em;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  &__form {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &__profile-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    width: 225px;
+    height: 145px;
+    border-radius: 8px;
+    background-color: whitesmoke;
+    border: 2px solid var(--color-green-weathered);
+
+    & input {
+      display: none;
+    }
+
+    & label {
+      display: flex;
+      width: 80px;
+      height: 80px;
+      position: relative;
+      border-radius: 50%;
+      overflow: hidden;
+
+      &:hover div {
+        display: block;
+      }
+      & div {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        animation: fadeIn 0.3s;
+
+        & svg {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 50px;
+          height: 50px;
+          fill: #eee;
+        }
+      }
+
+      & img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid var(--color-green-mint);
+      }
+    }
+  }
+
+  &__input-box {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    @include respond(big-phone) {
+      width: 100%;
+    }
+
+    & > label {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+      @include respond(big-phone) {
+        font-size: 2rem;
+      }
+    }
+  }
+  &__input {
+    padding: 1.25rem 2rem;
+    font-size: 1.6rem;
+    border: 2px solid var(--bg-upload-btn);
+    border-radius: 4px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    @include respond(big-phone) {
+      font-size: 2.3rem;
+    }
+
+    &::placeholder {
+      color: var(--color-dark);
+      opacity: 0.8;
+    }
+  }
+}
+.inputs-container {
+  margin-top: 2.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+
+  @include respond(big-phone) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+.recycle-user-edit__subheader {
+  font-size: 3.2rem;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+}
+.profile-text {
+  text-transform: uppercase;
+  font-weight: 800;
+  align-self: center;
+  font-size: 2.6rem;
+  color: #222222bd;
+}
+
+.bio-container {
+  height: 15rem;
+  width: 60rem;
+  margin-top: 2rem;
+
+  & label {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 0.2rem;
+
+    @include respond(big-phone) {
+      font-size: 2rem;
+    }
+  }
+}
+.bio {
+  font-family: var(--font-base);
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--color-green-mint);
+  font-size: 1.6rem;
+  width: 100%;
+  height: 100%;
+  @include respond(big-phone) {
+    font-size: 2rem;
+  }
+}
+
+.buttons {
+  @include f-center;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

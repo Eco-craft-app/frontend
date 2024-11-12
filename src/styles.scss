@@ -52,22 +52,30 @@ $HackHeroes-theme: mat.define-theme((
   --color-green-mint-lowOp: #59c79454;
   --color-green-weathered: #D8F3DC;
   --color-green-light: #3eae44;
-}
-[data-theme="light"] {
   --bg-color: #fff;
   --bg-nav: #a9a9a980;
   --color-bl_wh: #ddd;
   --bg-idea: #000000CC;
-  --bg-prim-nav: #2D6A4F;
+  --bg-prim-nav: #028E15;
+  --bg-recycle-info: #D3FFCF;
+  --bg-recycle-info-btn: #39B54A;
 
 }
-[data-theme="dark"] {
-  --bg-color: #000;
-  --bg-nav: #28282880;
-  --color-bl_wh: #111;
-  --bg-idea: #ffffffCC;
-  --bg-prim-nav: #2D6A4F;
-}
+// [data-theme="light"] {
+//   --bg-color: #fff;
+//   --bg-nav: #a9a9a980;
+//   --color-bl_wh: #ddd;
+//   --bg-idea: #000000CC;
+//   --bg-prim-nav: #2D6A4F;
+
+// }
+// [data-theme="dark"] {
+//   --bg-color: #000;
+//   --bg-nav: #28282880;
+//   --color-bl_wh: #111;
+//   --bg-idea: #ffffffCC;
+//   --bg-prim-nav: #2D6A4F;
+// }
 
 * {
   margin: 0;
@@ -77,6 +85,7 @@ $HackHeroes-theme: mat.define-theme((
 
 html {
   font-size: 62.5%;
+  scroll-behavior: smooth;
 
   @include respond(tab-land) {
     font-size: 50%;
@@ -123,13 +132,28 @@ body {
       background-color: rgb(27, 103, 27);
     }
 }
+
+.main-red {
+  background-color: rgb(200, 22, 22);
+
+  &:hover {
+    background-color: rgb(150, 22, 22);
+  }
+}
+
 .truncated-text {
   overflow: hidden;             /* Ukrywa nadmiarowy tekst */
   text-overflow: ellipsis;      /* Wyświetla '...' na końcu tekstu */
   display: -webkit-box;         /* Tworzy kontener na kilka linii */
-  -webkit-line-clamp: 3;        /* Maksymalna liczba linii */
+  -webkit-line-clamp: 1;        /* Maksymalna liczba linii */
   -webkit-box-orient: vertical; /* Ustala orientację na pionową */
   white-space: normal;          /* Pozwala na zawijanie tekstu */
+}
+.header-divider {
+  width: 100%;
+  height: 2px;
+  background-color: rgba(128, 128, 128, 0.587);
+  margin: 2.25rem 0 2.75rem 0;
 }
 
 html, body { height: 100%; }

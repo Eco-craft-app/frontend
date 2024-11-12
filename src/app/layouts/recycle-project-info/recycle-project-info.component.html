@@ -1,0 +1,46 @@
+<div class="recycle-project-info">
+  <div class="recycle-project-info__header">
+    <div class="recycle-project-info__avatar-box">
+      <img [src]="userInfo()?.avatarUrl" alt="user-avatar">
+    </div>
+    <div class="recycle-project-info__info">
+      <p class="recycle-project-info__info-title">{{ projectInfo()?.title }}</p>
+      <div class="recycle-project-info__info-subtitle">
+        <a class="recycle-project-info__username">{{ userInfo()?.userName }}</a>
+        <p class="recycle-project-info__date">{{ projectInfo()?.createdAt | date}}</p>
+      </div>
+      <div class="recycle-project-info__info-icons">
+        <div class="recycle-project-info__info-icon-box">
+          <svg class="comment" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M880-80 720-240H320q-33 0-56.5-23.5T240-320v-40h440q33 0 56.5-23.5T760-440v-280h40q33 0 56.5 23.5T880-640v560ZM160-473l47-47h393v-280H160v327ZM80-280v-520q0-33 23.5-56.5T160-880h440q33 0 56.5 23.5T680-800v280q0 33-23.5 56.5T600-440H240L80-280Zm80-240v-280 280Z"/></svg>
+        </div>
+        <div class="recycle-project-info__info-icon-box">
+          <span class="material-symbols-outlined likes-box__icon">
+            favorite
+          </span>
+          <p>{{ projectInfo()?.likeCount | shortenNumber }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="recycle-project-info__gallery">
+    <div class="recycle-project-info__gallery-show-photo">
+      <button class="recycle-project-info__gallery-arrow left-arrow" (click)="previousPhoto()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M360-200 80-480l280-280 56 56-183 184h647v80H233l184 184-57 56Z"/></svg>
+      </button>
+      <img [src]="actualPhoto()" alt="actual-photo">
+      <button class="recycle-project-info__gallery-arrow right-arrow" (click)="nextPhoto()">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="m600-200-57-56 184-184H80v-80h647L544-704l56-56 280 280-280 280Z"/></svg>
+      </button>
+    </div>
+    <div class="recycle-project-info__gallery-thumbnails-box">
+      <div #scrollContainer class="recycle-project-info__gallery-thumbnails">
+        @for (photo of photos(); track $index) {
+          <div [class]="['recycle-project-info__gallery-thumbnail', photo.url === actualPhoto() && 'selected']" (click)="onSelectPhoto(photo, $index)">
+            <img [src]="photo.url" alt="thumbnail-photo">
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+

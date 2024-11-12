@@ -3,6 +3,9 @@ export interface Project {
   title: string
   photoUrl: string
   createdAt: string
-  likedCount: number
+  likeCount: number
   userId: string | null
+  userName: string | null
+  isLikedByTheCurrentUser: boolean
+  userAvatarUrl: string | null
 }

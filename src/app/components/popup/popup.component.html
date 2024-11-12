@@ -1,0 +1,12 @@
+<!-- Element, który wywołuje popup -->
+<button (click)="togglePopup($event)" class="trigger-btn">Otwórz Popup</button>
+
+<!-- Popup -->
+<div 
+  class="popup" 
+  *ngIf="isPopupVisible"
+  (click)="handlePopupClick($event)" 
+>
+  <p>To jest Twój popup!</p>
+  <button (click)="closePopup()">Zamknij</button>
+</div>

@@ -24,11 +24,13 @@ export class AuthGuard extends KeycloakAuthGuard {
     // Force the user to log in if currently unauthenticated.
     if(this.authenticated) {
       this.router.navigate(['/recycle']);
+      localStorage.removeItem('isProfileSet');
     }
     if (!this.authenticated) {
       await this.keycloak.login({
-        redirectUri: 'http://localhost:4200/recycle',
+        redirectUri: `http://localhost:4200/recycle/your_username/edit`,
       });
+      localStorage.removeItem('isProfileSet');
     }
     // Get the roles required from the route.
     const requiredRoles = route.data["roles"];
