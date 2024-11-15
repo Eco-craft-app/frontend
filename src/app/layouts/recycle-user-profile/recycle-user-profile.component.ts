@@ -44,8 +44,6 @@ export class RecycleUserProfileComponent {
   isUserProjects = signal<boolean>(true);
 
   async ngOnInit() {
-    console.log(this.id());
-    console.log(this.userService.userInfo());
     let profile = undefined;
     if (this.keycloakService.isLoggedIn()) {
       profile = await this.keycloakService.getUserProfile();
@@ -57,11 +55,10 @@ export class RecycleUserProfileComponent {
         this.userService.isSameUser.set(true);
       }
     }
-    console.log(this.isSameUser());
+
     const sub = this.userService.getUserProfile(this.id()).subscribe({
       next: (data) => {
         this.userProfile.set(data as UserInfo);
-        console.log(this.userProfile());
       },
     });
     const sorts = this.sortOrder() === 'asc' ? 'likeCount' : '-likeCount';
@@ -74,16 +71,16 @@ export class RecycleUserProfileComponent {
     //   )
     //   .subscribe({
     //     next: (data) => {
-    //       console.log(data);
+    //
     //       const projectData = data as { items: Project[] };
     //       const totalPages = data as { totalPages: number };
-    //       console.log(totalPages.totalPages);
-    //       console.log(projectData.items);
+    //
+    //
     //       this.projectsService.updateProjects(projectData.items);
     //       // this.userProjects.set(projectData.items);
     //       this.projectsService.totalPages.set(totalPages.totalPages);
     //       this.updateArrayPagesNew();
-    //       console.log(this.userProjects());
+    //
     //     },
     //   });
     // this.destroyRef.onDestroy(() => {
@@ -102,16 +99,13 @@ export class RecycleUserProfileComponent {
       )
       .subscribe({
         next: (data) => {
-          console.log(data);
           const projectData = data as { items: Project[] };
           const totalPages = data as { totalPages: number };
-          console.log(totalPages.totalPages);
-          console.log(projectData.items);
+
           this.projectsService.updateProjects(projectData.items);
           // this.userProjects.set(projectData.items);
           this.projectsService.totalPages.set(totalPages.totalPages);
           this.updateArrayPagesNew();
-          console.log(this.userProjects());
         },
       });
   }
@@ -128,16 +122,13 @@ export class RecycleUserProfileComponent {
       )
       .subscribe({
         next: (data) => {
-          console.log(data);
           const projectData = data as { items: Project[] };
           const totalPages = data as { totalPages: number };
-          console.log(totalPages.totalPages);
-          console.log(projectData.items);
+
           this.projectsService.updateProjects(projectData.items);
           // this.userProjects.set(projectData.items);
           this.projectsService.totalPages.set(totalPages.totalPages);
           this.updateArrayPagesNew();
-          console.log(this.userProjects());
         },
       });
   }
@@ -163,7 +154,6 @@ export class RecycleUserProfileComponent {
 
     // Wyświetlamy odpowiednią część tablicy
     this.shownArrayPages = this.arrayPages.slice(startPage - 1, endPage);
-    console.log('Updated arrayPages:', this.shownArrayPages);
   }
 
   fetchProjects() {
@@ -176,68 +166,56 @@ export class RecycleUserProfileComponent {
         .getProjects(this.page(), this.pageSize(), filters, sorts)
         .subscribe({
           next: (data: any) => {
-            console.log(data);
             this.projectsService.updateProjects(data.items as Project[]);
             // this.userProjects.set(data.items as Project[]);
           },
-          error: (err: any) => {
-            console.log(err);
-          },
+          error: (err: any) => {},
         });
     } else {
       this.projectsService
         .getLikedProjects(this.page(), this.pageSize(), filters, sorts)
         .subscribe({
           next: (data: any) => {
-            console.log(data);
             this.projectsService.updateProjects(data.items as Project[]);
             // this.userProjects.set(data.items as Project[]);
           },
-          error: (err: any) => {
-            console.log(err);
-          },
+          error: (err: any) => {},
         });
     }
   }
 
   changePage(page: number) {
-    console.log('changePage', page);
     this.projectsService.page.update((prev: string) => page.toString());
     this.pageNumber.set(page);
     this.updateArrayPagesNew();
     this.fetchProjects();
   }
   prevFirstPage() {
-    console.log('prevFirstPage');
     this.projectsService.page.update((prev: string) => '1');
     this.pageNumber.set(1);
     this.updateArrayPagesNew();
     this.fetchProjects();
   }
   prevPage() {
-    console.log('prevPage');
     this.projectsService.page.update((prev: string) =>
       (Number(prev) - 1).toString()
     );
     this.pageNumber.update((prev: number) => prev - 1);
     this.updateArrayPagesNew();
-    console.log(this.page());
-    console.log(this.pageNumber);
+
     this.fetchProjects();
   }
   nextPage() {
-    console.log('nextPage');
     this.projectsService.page.update((prev: string) =>
       (Number(prev) + 1).toString()
     );
-    console.log(this.page());
+
     this.pageNumber.update((prev: number) => prev + 1);
     this.updateArrayPagesNew();
-    console.log(this.pageNumber);
+
     this.fetchProjects();
   }
   nextLastPage() {
-    console.log('nextLastPage');
     this.projectsService.page.update((prev: string) =>
       this.arrayPages.length.toString()
     );

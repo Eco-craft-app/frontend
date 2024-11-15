@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ChatService {
-  url = 'https://7443-31-0-26-20.ngrok-free.app/'
+  url = 'http://eco-craft.duckdns.org:2024'
   private chatContent = signal<any[]>([]);
   private httpClient = inject(HttpClient);
   allChatContent = this.chatContent.asReadonly();

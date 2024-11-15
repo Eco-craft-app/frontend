@@ -4,7 +4,7 @@ export function initializeKeycloak(keycloak: KeycloakService) {
   return () =>
     keycloak.init({
       config: {
-        url: 'http://localhost:18080',
+        url: 'https://eco-craft-auth-keycloak.duckdns.org/',
         realm: 'recycle-app',
         clientId: 'public-client',
       },

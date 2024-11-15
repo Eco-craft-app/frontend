@@ -41,28 +41,20 @@ export class RecycleUploadComponent {
   });
 
   ngOnInit() {
-    console.log(this.id());
-
     if (this.id()) {
       const sub = this.projectsService.getProjectById(this.id()!).subscribe({
         next: (data) => {
-          console.log(data);
           const projectData = data as ProjectInfo;
           this.form.get('title')!.setValue(projectData.title);
           this.form.get('description')!.setValue(projectData.description);
           this.cloudinaryFiles.set(projectData.photos);
-          console.log(this.cloudinaryFiles());
         },
-        error: (err) => {
-          console.log(err);
-        },
+        error: (err) => {},
       });
     }
   }
 
   async onAddProject() {
-    console.log(this.form.valid);
-    console.log(this.cloudinaryService.imagesInfo());
     if (this.dropZoneFiles().length === 0) {
       this.toastrService.error('Prześlij zdjęcia!', 'Brak zdjęć');
       return;
@@ -73,7 +65,7 @@ export class RecycleUploadComponent {
     }
     this.isSubmitting.set(true);
     const files = await this.uploadFiles();
-    console.log(files);
+
     const projectData = {
       title: this.form.get('title')!.value,
       description: this.form.get('description')!.value,
@@ -87,24 +79,28 @@ export class RecycleUploadComponent {
     try {
       this.httpClient
         .post(
-          'https://localhost:5001/api/projects',
+          'https://eco-craft.duckdns.org:2001/api/projects',
           JSON.stringify(projectData),
           { headers }
         )
         .subscribe({
           next: (response) => {
-            console.log(response);
             this.form.reset();
             this.cloudinaryService.imagesInfo.set([]);
             this.dropZoneFiles.set([]);
             this.cloudinaryFilesToUpload.set([]);
             this.cloudinaryFiles.set([]);
             this.toastrService.success('Projekt dodany pomyślnie', 'Sukces');
-          }, error: (err) => {
-            this.toastrService.error('Wystąpił błąd podczas dodawania projektu', 'Wystąpił błąd');
-          }, complete: () => {
+          },
+          error: (err) => {
+            this.toastrService.error(
+              'Wystąpił błąd podczas dodawania projektu',
+              'Wystąpił błąd'
+            );
+          },
+          complete: () => {
             this.isSubmitting.set(false);
-          }
+          },
         });
     } catch (error) {
       this.toastrService.error(
@@ -121,14 +117,11 @@ export class RecycleUploadComponent {
   myWidget: any;
 
   onSelect(event: NgxDropzoneChangeEvent) {
-    console.log(event);
-    console.log(event.addedFiles);
     this.cloudinaryFilesToUpload.update((files) => [
       ...files,
       ...event.addedFiles,
     ]);
     const addedFiles = event.addedFiles.map((file: File) => {
-      console.log(file);
       const newFile = {
         name: file.name,
         size: file.size,
@@ -141,25 +134,19 @@ export class RecycleUploadComponent {
         url: URL.createObjectURL(file),
       };
     });
-    console.log('addedFiles: ', addedFiles);
 
-    if(this.id()) {
+    if (this.id()) {
       this.cloudinaryFiles.update((files) => [...files, ...addedFiles]);
-      console.log(this.cloudinaryFiles());
     }
     this.dropZoneFiles.update((files) => [...files, ...addedFiles]);
-    console.log('cloudinaryFilesToUpload:', this.cloudinaryFilesToUpload());
-    console.log('dropZoneFiles:', this.dropZoneFiles());
   }
   onRemove(event: any) {
     if (this.id()) {
-      console.log(this.cloudinaryFiles());
       this.cloudinaryFiles.update((files) =>
         files.filter((file: any) => {
-          console.log(file);
-          if(file.url !== event.url) {
+          if (file.url !== event.url) {
             return true;
-          } else if(file.name !== event.name) {
+          } else if (file.name !== event.name) {
             return true;
           } else {
             return false;
@@ -181,21 +168,20 @@ export class RecycleUploadComponent {
     const uploadPromises = this.cloudinaryFilesToUpload().map(
       (file_data: File, index: number) => {
         const data = new FormData();
-        console.log(file_data);
+
         data.append('file', file_data);
         data.append('upload_preset', 'new-project');
-        console.log(data);
 
         return new Promise(async (resolve, reject) => {
           const sub = (
             await this.cloudinaryService.uploadImage(data)
           ).subscribe({
             next: (data: any) => {
-              let i = index
-              console.log(data);
+              let i = index;
+
               let uploadedFile;
-              console.log(this.cloudinaryFiles());
-              if(this.id()) {
+
+              if (this.id()) {
                 i = this.cloudinaryFiles().length;
               }
               if (i === 0) {
@@ -212,12 +198,12 @@ export class RecycleUploadComponent {
 
               // Aktualizacja listy cloudinaryFiles
               this.cloudinaryFiles.update((files) => [...files, uploadedFile]);
-              this.cloudinaryFiles.update((files) => files.filter((f: any) => f.name === undefined))
+              this.cloudinaryFiles.update((files) =>
+                files.filter((f: any) => f.name === undefined)
+              );
               resolve(uploadedFile);
-              console.log(this.cloudinaryFiles());
             },
             error: (err: any) => {
-              console.log(err);
               reject(err);
             },
             complete: () => {
@@ -240,8 +226,6 @@ export class RecycleUploadComponent {
   }
 
   async editProject() {
-    console.log('editProject');
-    console.log(this.form.valid);
     if (this.dropZoneFiles().length === 0) {
       this.toastrService.error('Prześlij zdjęcia!', 'Brak zdjęć');
       return;
@@ -252,13 +236,13 @@ export class RecycleUploadComponent {
     }
     this.isSubmitting.set(true);
     const files = await this.uploadFiles();
-    console.log(files);
+
     const projectData = {
       title: this.form.get('title')!.value,
       description: this.form.get('description')!.value,
       photos: files,
     };
-    console.log(projectData)
+
     const token = JSON.parse(localStorage.getItem('userToken')!); // Zmienna przechowująca Twój Bearer Token
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
@@ -267,24 +251,31 @@ export class RecycleUploadComponent {
     try {
       this.httpClient
         .put(
-          `https://localhost:5001/api/projects/${this.id()}`,
+          `https://eco-craft.duckdns.org:2001/api/projects/${this.id()}`,
           JSON.stringify(projectData),
           { headers }
         )
         .subscribe({
           next: (response) => {
-            console.log(response);
             // this.form.reset();
             this.cloudinaryService.imagesInfo.set([]);
             this.dropZoneFiles.set([]);
             this.cloudinaryFilesToUpload.set([]);
             // this.cloudinaryFiles.set([]);
-            this.toastrService.success('Projekt zaktualizowany pomyślnie', 'Success');
-          }, error: (err) => {
-            this.toastrService.error('Wystąpił błąd podczas aktualizacji projektu', 'Wystąpił błąd');
-          }, complete: () => {
+            this.toastrService.success(
+              'Projekt zaktualizowany pomyślnie',
+              'Success'
+            );
+          },
+          error: (err) => {
+            this.toastrService.error(
+              'Wystąpił błąd podczas aktualizacji projektu',
+              'Wystąpił błąd'
+            );
+          },
+          complete: () => {
             this.isSubmitting.set(false);
-          }
+          },
         });
     } catch (error) {
       this.toastrService.error(

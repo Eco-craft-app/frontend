@@ -19,18 +19,29 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 import { ShortenNumberPipe } from '../../pipes/shortenNumber.pipe';
 import { Project } from '../../models/project.model';
 import { KeycloakOperationService } from '../../services/keycloak.service';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { ProjectInfoService } from '../../services/project-info.service';
 import localePl from '@angular/common/locales/pl';
 
-registerLocaleData(localePl);  // Rejestracja lokalizacji dla Polski
+registerLocaleData(localePl); // Rejestracja lokalizacji dla Polski
 
 @Component({
   selector: 'app-recycle-project-info',
   standalone: true,
-  imports: [DatePipe, ShortenNumberPipe, RouterLink, RouterOutlet, RouterLinkActive],
+  imports: [
+    DatePipe,
+    ShortenNumberPipe,
+    RouterLink,
+    RouterOutlet,
+    RouterLinkActive,
+  ],
   templateUrl: './recycle-project-info.component.html',
   styleUrl: './recycle-project-info.component.scss',
 })
@@ -56,11 +67,8 @@ export class RecycleProjectInfoComponent {
   toastrService = inject(ToastrService);
 
   async ngOnInit() {
-    console.log(this.isSameUser());
-    console.log(this.id());
     const sub = this.projectsService.getProjectById(this.id()).subscribe({
       next: async (project) => {
-        console.log(project);
         this.project.set(project as Project);
         let profile = undefined;
         if (this.isLoggedIn) {
@@ -73,18 +81,23 @@ export class RecycleProjectInfoComponent {
             this.userService.isSameUser.set(true);
           }
         }
-        console.log(this.project()!.userId);
+
         this.projectInfo.set(project as ProjectInfo);
         this.projectInfoService.setProjectInfo(this.projectInfo()!);
-        this.photos.set(this.projectInfo()!.photos.sort((a: any, b: any) => {
-          return b.isMain - a.isMain;
-        }));
-        console.log(this.photos());
+        this.photos.set(
+          this.projectInfo()!.photos.sort((a: any, b: any) => {
+            return b.isMain - a.isMain;
+          })
+        );
+
         this.actualPhoto.set(this.photos().find((photo) => photo.isMain)!.url);
-        console.log(this.projectInfo());
-        console.log(this.project());
+
         this.httpClient
-          .get(`https://localhost:5001/api/users/${this.projectInfo()!.userId}`)
+          .get(
+            `https://eco-craft.duckdns.org:2001/api/users/${
+              this.projectInfo()!.userId
+            }`
+          )
           .subscribe({
             next: (user) => {
               this.userInfo.set(user as UserInfo);
@@ -103,8 +116,7 @@ export class RecycleProjectInfoComponent {
       this.router.navigate(['/login']);
     }
     this.isLiking.set(true);
-    console.log(this.project()!.isLikedByCurrentUser);
-    console.log(this.projectInfo()!.projectId);
+
     const sub = this.projectsService
       .toggleLike(
         this.projectInfo()!.projectId,
@@ -112,36 +124,34 @@ export class RecycleProjectInfoComponent {
       )
       .subscribe({
         next: (data) => {
-          console.log(data);
           this.projectsService.getProjectById(this.id()).subscribe({
             next: (project) => {
-              console.log(project);
               this.project.set(project as Project);
               this.projectInfo.set(project as ProjectInfo);
-              console.log(this.project());
             },
           });
           // this.projectInfo.set(data as ProjectInfo);
         },
-        error: (err) => {
-          console.log(err);
-        },
+        error: (err) => {},
         complete: () => {
           this.isLiking.set(false);
         },
       });
   }
-  
+
   deleteProject() {
     this.projectsService.deleteProject(this.project()!.projectId).subscribe({
       next: (data) => {
-        console.log(data);
         this.router.navigate(['/recycle']);
         this.toastrService.success('Projekt usunięty pomyślnie', 'Sukces');
-      }, error: (err) => {
-        this.toastrService.error('Wystąpił błąd podczas usuwania projektu', 'Wystąpił błąd');
-      }
-    })
+      },
+      error: (err) => {
+        this.toastrService.error(
+          'Wystąpił błąd podczas usuwania projektu',
+          'Wystąpił błąd'
+        );
+      },
+    });
   }
 
   nextPhoto() {
@@ -171,9 +181,9 @@ export class RecycleProjectInfoComponent {
     // const container = this.scrollContainer.nativeElement;
     // const elements = container.querySelectorAll('.recycle-project-info__gallery-thumbnail');
     // const targetElement = elements[elements.length - indexFromEnd];
-    // console.log(container)
-    // console.log(elements)
-    // console.log(targetElement.offsetTop)
+    //
+    //
+    //
 
     // if (targetElement) {
     //   container.scrollTop = targetElement.offsetTop - container.offsetTop - 300;

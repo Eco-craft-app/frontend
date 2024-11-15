@@ -24,17 +24,17 @@ export class RecycleUserEditComponent {
   private toastrService = inject(ToastrService);
   private userService = inject(UserService);
   private destroyRef = inject(DestroyRef);
-  private router = inject(Router)
+  private router = inject(Router);
   isSet = computed(() => this.userService.haveSetProfile());
   isProfileSet = signal<boolean>(true);
   profileInfo = JSON.parse(localStorage.getItem('isProfileSet')!);
   profileData = signal<any>(undefined);
   imageUrlString = signal<string | null>(null);
   // defaultUserAvatar = 'https://res.cloudinary.com/recycle/image/upload/v1731586010/default-user-recycle_flents.webp'
-  defaultUserAvatar = 'https://res.cloudinary.com/recycle/image/upload/v1731617035/default-user-circle_pyln48.png'
+  defaultUserAvatar =
+    'https://res.cloudinary.com/recycle/image/upload/v1731617035/default-user-circle_pyln48.png';
 
   ngAfterViewnInit() {
-    console.log(this.form);
     if (this.profileData()) {
       this.form.get('location')?.setValue(this.profileData().location);
       this.form.get('username')?.setValue(this.profileData().userName);
@@ -43,51 +43,52 @@ export class RecycleUserEditComponent {
   }
 
   Cancel() {
-    this.router.navigate(['/recycle', 'profile', this.profileData().userId, 'projects']);
+    this.router.navigate([
+      '/recycle',
+      'profile',
+      this.profileData().userId,
+      'projects',
+    ]);
   }
 
   async ngOnInit() {
-    console.log(await this.keycloakService.getUserDatas());
-    console.log(this.form);
-    console.log(this.profileInfo);
     const userData = await this.keycloakService.getUserDatas();
-    console.log(userData)
-    const sub = this.userService.getUserProfile(userData.profile.id!).subscribe({
-      next: (data: any) => {
-        console.log(data);
-        this.form.get('location')?.setValue(data.location);
-        this.form.get('username')?.setValue(data.userName);
-        this.form.get('bio')?.setValue(data.bio);
-        this.profileData.set(data);
-        this.imageUrlString.set(data.avatarUrl);
-        this.isProfileSet.set(true);
-        this.userService.haveSetProfile.set(true);
-        localStorage.setItem('isProfileSet', JSON.stringify(true));
-      },
-      error: (err: any) => {
-        this.isProfileSet.set(false);
-        this.userService.haveSetProfile.set(false);
-        localStorage.setItem('isProfileSet', JSON.stringify(false));
-        console.log(this.isProfileSet());
-      },
-    });
+
+    const sub = this.userService
+      .getUserProfile(userData.profile.id!)
+      .subscribe({
+        next: (data: any) => {
+          this.form.get('location')?.setValue(data.location);
+          this.form.get('username')?.setValue(data.userName);
+          this.form.get('bio')?.setValue(data.bio);
+          this.profileData.set(data);
+          this.imageUrlString.set(data.avatarUrl);
+          this.isProfileSet.set(true);
+          this.userService.haveSetProfile.set(true);
+          localStorage.setItem('isProfileSet', JSON.stringify(true));
+        },
+        error: (err: any) => {
+          this.isProfileSet.set(false);
+          this.userService.haveSetProfile.set(false);
+          localStorage.setItem('isProfileSet', JSON.stringify(false));
+        },
+      });
 
     this.destroyRef.onDestroy(() => {
       sub.unsubscribe();
     });
-    console.log(this.isProfileSet());
   }
 
   constructor() {
-    // console.log(this.form);
-    // console.log(this.profileInfo);
+    //
+    //
     // const userData = this.keycloakService.getUserDatas();
     // const user = JSON.parse(localStorage.getItem('userInfoData')!);
-    // console.log(user)
-    // console.log(userData)
+    //
+    //
     // const sub = this.userService.getUserProfile(user.id).subscribe({
     //   next: (data: any) => {
-    //     console.log(data);
+    //
     //     this.form.get('location')?.setValue(data.location);
     //     this.form.get('username')?.setValue(data.userName);
     //     this.form.get('bio')?.setValue(data.bio);
@@ -99,14 +100,13 @@ export class RecycleUserEditComponent {
     //   error: (err: any) => {
     //     this.isProfileSet.set(false);
     //     localStorage.setItem('isProfileSet', JSON.stringify(false));
-    //     console.log(this.isProfileSet());
+    //
     //   },
     // });
-
     // this.destroyRef.onDestroy(() => {
     //   sub.unsubscribe();
     // });
-    // console.log(this.isProfileSet());
+    //
   }
 
   imageUrl: string | ArrayBuffer | null = null;
@@ -162,51 +162,52 @@ export class RecycleUserEditComponent {
       userName: profileData.username,
       bio: this.form.get('bio')?.value,
     };
-    console.log(userProfileData);
 
     if (this.form.invalid) {
       this.toastrService.error('Wszystkie pola są wymagane.');
       return;
     }
 
-    if(this.isProfileSet()) {
-      const sub = this.userService.updateUserProfile(userProfileData).subscribe({
-        next: (data: any) => {
-          console.log(data);
-          this.userService.haveSetProfile.set(true);
-          console.log(this.userService.haveSetProfile());
-          localStorage.setItem('isProfileSet', JSON.stringify(true));
-          this.toastrService.success('Profil został pomyślnie zaktualizowany.');
-        },
-        error: (err: any) => {
-          this.toastrService.error('Wystąpił błąd podczas aktualizacji profilu.');
-        }
-      });
+    if (this.isProfileSet()) {
+      const sub = this.userService
+        .updateUserProfile(userProfileData)
+        .subscribe({
+          next: (data: any) => {
+            this.userService.haveSetProfile.set(true);
+
+            localStorage.setItem('isProfileSet', JSON.stringify(true));
+            this.toastrService.success(
+              'Profil został pomyślnie zaktualizowany.'
+            );
+          },
+          error: (err: any) => {
+            this.toastrService.error(
+              'Wystąpił błąd podczas aktualizacji profilu.'
+            );
+          },
+        });
 
       this.destroyRef.onDestroy(() => {
         sub.unsubscribe();
       });
-      console.log(userProfileData);
     } else {
       const sub = this.userService.addUserProfile(userProfileData).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.userService.haveSetProfile.set(true);
-          console.log(this.userService.haveSetProfile());
+
           localStorage.setItem('isProfileSet', JSON.stringify(true));
           this.toastrService.success('Profil został pomyślnie dodany');
           this.router.navigate(['/recycle']);
         },
         error: (err: any) => {
           this.toastrService.error('Wystąpił błąd podczas dodawania profilu.');
-        }
+        },
       });
-  
+
       this.destroyRef.onDestroy(() => {
         sub.unsubscribe();
       });
     }
-    console.log(userProfileData);
   }
 
   async uploadToCloudinary(): Promise<void> {
@@ -215,7 +216,6 @@ export class RecycleUserEditComponent {
     const formData = new FormData();
     formData.append('file', this.fileInfo);
     formData.append('upload_preset', this.uploadPreset);
-    console.log(formData);
 
     try {
       const response = await axios.post(this.cloudinaryUrl, formData, {
@@ -223,7 +223,6 @@ export class RecycleUserEditComponent {
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response);
 
       return response.data.secure_url;
     } catch (error) {

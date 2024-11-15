@@ -24,22 +24,33 @@ export class ProjectsService {
   getProjectById(id: string) {
     let token = undefined;
     const tokenJSON = localStorage.getItem('userToken');
-    if (tokenJSON !== 'undefined' && tokenJSON !== null && tokenJSON !== undefined) {
+    if (
+      tokenJSON !== 'undefined' &&
+      tokenJSON !== null &&
+      tokenJSON !== undefined
+    ) {
       token = JSON.parse(tokenJSON!);
     }
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json',
     });
-    return this.httpClient.get(`https://localhost:5001/api/projects/${id}`, {
-      headers,
-    });
+    return this.httpClient.get(
+      `https://eco-craft.duckdns.org:2001/api/projects/${id}`,
+      {
+        headers,
+      }
+    );
   }
 
   deleteProject(id: string) {
     let token = undefined;
     const tokenJSON = localStorage.getItem('userToken');
-    if (tokenJSON !== 'undefined' && tokenJSON !== null && tokenJSON !== undefined) {
+    if (
+      tokenJSON !== 'undefined' &&
+      tokenJSON !== null &&
+      tokenJSON !== undefined
+    ) {
       token = JSON.parse(tokenJSON!);
     }
     const headers = new HttpHeaders({
@@ -47,15 +58,22 @@ export class ProjectsService {
       'Content-Type': 'application/json',
     });
 
-    return this.httpClient.delete(`https://localhost:5001/api/projects/${id}`, {
-      headers,
-    });
+    return this.httpClient.delete(
+      `https://eco-craft.duckdns.org:2001/api/projects/${id}`,
+      {
+        headers,
+      }
+    );
   }
 
   toggleLike(projectId: string, isAlreadyLiked: boolean) {
     let token = undefined;
     const tokenJSON = localStorage.getItem('userToken');
-    if (tokenJSON !== 'undefined' && tokenJSON !== null && tokenJSON !== undefined) {
+    if (
+      tokenJSON !== 'undefined' &&
+      tokenJSON !== null &&
+      tokenJSON !== undefined
+    ) {
       token = JSON.parse(tokenJSON!);
     }
     const headers = new HttpHeaders({
@@ -65,12 +83,12 @@ export class ProjectsService {
 
     if (isAlreadyLiked) {
       return this.httpClient.delete(
-        `https://localhost:5001/api/projects/${projectId}/likes`,
+        `https://eco-craft.duckdns.org:2001/api/projects/${projectId}/likes`,
         { headers }
       );
     } else {
       return this.httpClient.post(
-        `https://localhost:5001/api/projects/${projectId}/likes`,
+        `https://eco-craft.duckdns.org:2001/api/projects/${projectId}/likes`,
         {},
         { headers }
       );
@@ -78,7 +96,6 @@ export class ProjectsService {
   }
 
   getProjectsEarly(page: string, pageSize: string, userToken: string) {
-    console.log(userToken)
     let params = new HttpParams().set('page', page).set('pageSize', pageSize);
 
     const headers = new HttpHeaders({
@@ -86,13 +103,21 @@ export class ProjectsService {
       'Content-Type': 'application/json',
     });
 
-    return this.httpClient.get('https://localhost:5001/api/projects', {
-      params,
-      headers
-    });
+    return this.httpClient.get(
+      'https://eco-craft.duckdns.org:2001/api/projects',
+      {
+        params,
+        headers,
+      }
+    );
   }
-  
-  getLikedProjects(page: string, pageSize: string, filters?: { title?: string; userId?: string }, sorts?: string) {
+
+  getLikedProjects(
+    page: string,
+    pageSize: string,
+    filters?: { title?: string; userId?: string },
+    sorts?: string
+  ) {
     let params = new HttpParams().set('page', page).set('pageSize', pageSize);
 
     if (filters) {
@@ -111,7 +136,11 @@ export class ProjectsService {
 
     let token = undefined;
     const tokenJSON = localStorage.getItem('userToken');
-    if (tokenJSON !== 'undefined' && tokenJSON !== null && tokenJSON !== undefined) {
+    if (
+      tokenJSON !== 'undefined' &&
+      tokenJSON !== null &&
+      tokenJSON !== undefined
+    ) {
       token = JSON.parse(tokenJSON!);
     }
     const headers = new HttpHeaders({
@@ -119,10 +148,13 @@ export class ProjectsService {
       'Content-Type': 'application/json', // (opcjonalnie) w zależności od potrzeb API
     });
 
-    return this.httpClient.get('https://localhost:5001/api/projects/liked', {
-      params,
-      headers,
-    });
+    return this.httpClient.get(
+      'https://eco-craft.duckdns.org:2001/api/projects/liked',
+      {
+        params,
+        headers,
+      }
+    );
   }
 
   getProjects(
@@ -148,24 +180,31 @@ export class ProjectsService {
     if (sorts) {
       params = params.append('Sorts', sorts);
     }
-    
+
     let token = undefined;
     const tokenJSON = localStorage.getItem('userToken');
-    if (tokenJSON !== 'undefined' && tokenJSON !== null && tokenJSON !== undefined) {
+    if (
+      tokenJSON !== 'undefined' &&
+      tokenJSON !== null &&
+      tokenJSON !== undefined
+    ) {
       token = JSON.parse(tokenJSON!);
     }
     if (!token) {
       token = userToken;
     }
-    console.log(token);
+
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json', // (opcjonalnie) w zależności od potrzeb API
     });
 
-    return this.httpClient.get('https://localhost:5001/api/projects', {
-      params,
-      headers,
-    });
+    return this.httpClient.get(
+      'https://eco-craft.duckdns.org:2001/api/projects',
+      {
+        params,
+        headers,
+      }
+    );
   }
 }

@@ -10,7 +10,12 @@ import { ChatService } from '../../services/chat.service';
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, ChatContentComponent, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ChatContentComponent,
+    RouterLink,
+  ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
@@ -43,30 +48,25 @@ export class ChatComponent {
 
   onInput(event: any) {
     const target = event.target as HTMLInputElement;
-    console.log(target);
-    console.log(target.value);
-    console.log(target.files);
+
     this.uploadFiles(target.files![0]);
   }
 
   async uploadFiles(file: File) {
     const data = new FormData();
-    console.log(file);
+
     data.append('file', file);
     data.append('upload_preset', 'new-project');
-    console.log(data);
 
     return new Promise(async (resolve, reject) => {
       const sub = (await this.cloudinaryService.uploadImage(data)).subscribe({
         next: (data: any) => {
-          console.log(data);
           let uploadedFile;
 
           // Aktualizacja listy cloudinaryFiles
           resolve(uploadedFile);
         },
         error: (err: any) => {
-          console.log(err);
           reject(err);
         },
         complete: () => {
