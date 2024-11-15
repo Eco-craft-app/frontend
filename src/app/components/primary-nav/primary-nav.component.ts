@@ -1,12 +1,13 @@
 import { Component, DestroyRef, ElementRef, HostListener, inject, signal } from '@angular/core';
 import Keycloak from 'keycloak-js';
 import { ThemeComponent } from "../theme/theme.component";
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ProjectsService } from '../../services/projects.service';
 import { Project } from '../../models/project.model';
 import { debounceTime, Subject, switchMap } from 'rxjs';
 import { UserService } from '../../services/user.service';
 import { KeycloakOperationService } from '../../services/keycloak.service';
+import { UserProfile } from '../../models/user-profile.model';
 
 @Component({
   selector: 'app-primary-nav',
@@ -21,6 +22,7 @@ export class PrimaryNavComponent {
   private keycloakService = inject(KeycloakOperationService);
   private userService = inject(UserService);
   private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
   userProfile = signal<undefined | any>(undefined);
   searchQuery = signal<string>(''); // Zmienna do przechowywania wartości wyszukiwania
 
@@ -60,6 +62,11 @@ export class PrimaryNavComponent {
     this.destroyRef.onDestroy(() => {
       this.searchSubject.complete();
     });
+  }
+
+  viewProfile() {
+    this.projectsService.page.set('1');
+    this.router.navigate([`/recycle/profile/${this.userProfile()!.id}/projects`]);
   }
 
   onSearchChange(event: Event) {

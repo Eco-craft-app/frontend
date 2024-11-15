@@ -4,7 +4,7 @@
       <span class="ECO">ECO Helper</span>,<br> Pomocnik który podpowie co zrobić z śmieciami!
     </p>
     <div class="eco-helper_container">
-      <button class="eco-helper-btn">Sprawdź Teraz</button>
+      <button class="eco-helper-btn" routerLink="/recycle/chat">Sprawdź Teraz</button>
       <img src="assets/Recycle-bot.png" class="eco-helper" alt="eco-helper">
     </div>
     <p class="persuade">
@@ -13,7 +13,7 @@
   </div>
 
   <div class="search-sort-container">
-    <button (click)="toggleSortOrder()">
+    <button (click)="toggleSortOrder()" class="recycle-main-btn">
       Sortuj po popularności: {{ sortOrder() === 'asc' ? 'Rosnąco' : 'Malejąco' }}
     </button>
   </div>

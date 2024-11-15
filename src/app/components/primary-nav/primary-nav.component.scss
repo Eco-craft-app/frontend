@@ -42,9 +42,28 @@
 }
 
 .profile {
+  height: 100%;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-bl_wh);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: inherit;
   background: transparent;
   border: none;
+
+  & svg {
+    height: 3rem;
+    width: 3rem;
+    transition: transform 0.3s;
+  }
+  .arrow-down {
+    transform: rotate(180deg);
+  }
 }
 .profile span {
   font-size: 3rem;

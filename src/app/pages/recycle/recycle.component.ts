@@ -5,6 +5,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { KeycloakOperationService } from '../../services/keycloak.service';
 import { UserService } from '../../services/user.service';
 import { UserKeycloakProfile } from '../../models/user-keycloak-profile.model';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-recycle',
@@ -24,6 +25,8 @@ export class RecycleComponent {
   userData = signal<undefined | any>(undefined);
 
   async ngOnInit() {
+  console.log(environment.apiUrl);
+
     console.log(this.isProfileSet())
     if(!this.keycloakService.isLoggedIn()) {
       return
@@ -32,6 +35,7 @@ export class RecycleComponent {
     console.log(this.userData());
     try {
       const isProfileSetJSON = localStorage.getItem('isProfileSet');
+      console.log(localStorage.getItem('userToken'));
       console.log(isProfileSetJSON);
       let isProfileSet;
       if (isProfileSetJSON) {

@@ -21,7 +21,7 @@
           @if(imageUrlString()) {
             <img [src]="imageUrlString()" alt="user-avatar">
           } @else {
-            <img src="assets/Girl-profile.jpg" alt="default-avatar">
+            <img [src]="defaultUserAvatar" alt="default-avatar">
           }
       </label>
     </div>
@@ -42,7 +42,7 @@
 
     <div class="buttons">
       @if(isProfileSet()) {
-        <button class="recycle-main-btn main-red" (click)="Cancel()">Cancel</button>
+        <button class="recycle-main-btn main-red" (click)="Cancel()">Anuluj</button>
       }
       <button type="submit" class="recycle-main-btn recycle-user-edit__btn">Zapisz</button>
     </div>

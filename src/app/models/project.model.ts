@@ -6,6 +6,6 @@ export interface Project {
   likeCount: number
   userId: string | null
   userName: string | null
-  isLikedByTheCurrentUser: boolean
+  isLikedByCurrentUser: boolean
   userAvatarUrl: string | null
 }

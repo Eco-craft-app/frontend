@@ -1,29 +1,77 @@
 <div class="recycle-upload-container">
   <section class="recycle-upload">
     <header class="recycle-upload__header">
-      <h1>Create a new project</h1>
+      @if(id()) {
+        <h1>Edytuj projekt</h1>
+      } @else {
+        <h1>Stwórz nowy projekt</h1>
+      }
     </header>
+
     <div class="header-divider"></div>
+
+    <div class="recycle-upload__content-dropzone">
+      <div class="recycle-upload__content-dropzone-head">
+        <ngx-dropzone
+          [maxFileSize]="10000000"
+          [accept]="'image/png, image/jpeg, image/jpg'"
+          (change)="onSelect($event)"
+          class="recycle-upload__dropzone"
+        >
+          <ngx-dropzone-label class="dropzone-info">
+            <p>Upuść swoje zdjęcia tutaj</p>
+            <span>albo</span>
+            <p>Kliknij na ten kontener i załącz pliki z swojego komputera</p>
+          </ngx-dropzone-label>
+          @if(id()) {
+            @for(file of cloudinaryFiles(); track file.url) {
+              <ngx-dropzone-preview class="dropzone-imageInfo-box" [removable]="true" (removed)="onRemove(file)">
+                <ngx-dropzone-label class="dropzone-image-label">
+                  <div class="dropzone-image-box"><img [src]="file.url" alt="uploaded-img"></div>
+                </ngx-dropzone-label>
+              </ngx-dropzone-preview>
+            }
+          } @else {
+            @for (file of dropZoneFiles(); track file.url) {
+            <ngx-dropzone-preview class="dropzone-imageInfo-box" [removable]="true" (removed)="onRemove(file)">
+              <ngx-dropzone-label class="dropzone-image-label">
+                <div class="dropzone-image-box"><img [src]="file.url" alt="uploaded-img"></div>
+              </ngx-dropzone-label>
+            </ngx-dropzone-preview>
+            }
+          }
+        </ngx-dropzone>
+        <!-- <button (click)="uploadFiles()">Upload Files</button> -->
+      </div>
+    </div>
+
     <div class="recycle-upload__content">
-      <p class="photos-header">Upload your photos using the button below</p>
-      <button id="upload_widget" (click)="openWidget()" class="recycle-main-btn">
-        Upload files
-      </button>
-      <p class="photos-info"><span class="notice">Notice!</span> Your first photo that you upload will be the main image on your project.</p>
-      <span class="photos-info-remember"><b>REMEMBER</b> to click done, it will upload your chosen photos, be determined because you can upload your photos only once</span>
+      <!-- <p class="photos-info"><span class="notice"></span></p> -->
+      <span class="photos-info-remember"><b>PAMIĘTAJ!</b> Pierwszy obrazek który załadujesz będzie twoim głównym obrazkiem projektu</span>
     </div>
     <div class="recycle-upload__basicInfo">
-      <h1>Basic Information</h1>
-      <form [formGroup]="form" (ngSubmit)="onAddProject()" class="project-info-form">
+      <h1>Podstawowe informacje</h1>
+      <form [formGroup]="form" (ngSubmit)="!isSubmitting() ? (!id() ? onAddProject() : editProject()) : null" [class]="['project-info-form', isSubmitting() ? 'disable' : '']">
         <div class="input-box">
-          <label for="title">Title</label>
+          <label for="title">Tytuł</label>
           <input formControlName="title" type="text" id="title" placeholder="Enter title" class="project-info-input"/>
         </div>
         <div class="input-box">
-          <label for="description">Description</label>
+          <label for="description">Opis</label>
           <textarea formControlName="description" rows="6" id="description" class="project-info-input"></textarea>
         </div>
-        <button type="submit" class="recycle-main-btn">Add project</button>
+        @if(id()) {
+          <div class="mainBtns">
+            <button class="recycle-main-btn main-red" [routerLink]="['/recycle', 'project', id()!]">Anuluj</button>
+            <button type="submit" class="recycle-main-btn">Zapisz</button>
+          </div>
+        } @else {
+          @if (!isSubmitting()) {
+            <button type="submit" class="recycle-main-btn">Dodaj Projekt</button>
+          } @else {
+            <p>Przesyłanie ...</p>
+          }
+        }
       </form>
     </div>
   </section>

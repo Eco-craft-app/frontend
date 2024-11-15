@@ -9,28 +9,29 @@
     </span>
   </div>
   <div class="content">
-    <a class="link">Odkryj</a>
-    <a class="link">ECO Helper</a>
+    <a class="link" routerLink="/home">Home</a>
+    <a class="link" routerLink="/recycle/chat">Czat</a>
     <div>
       <a class="link add" [routerLink]="['/recycle/upload']">Dodaj</a>
     </div>
     <div class="link-wrapper">
       @if(userProfile()) {
-        <button class="link profile" (click)="toggleUserInfoPopup($event)">
+        <button class="profile" (click)="toggleUserInfoPopup($event)">
           <span class="material-symbols-outlined">
             person
           </span>
+          <svg [class]="[isUserInfoVisible() ? 'arrow-down' : '']" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
         </button>
         @if(isUserInfoVisible()) {
           <div class="profile-popup userInfo-popup">
-            <a class="profile-link" [routerLink]="'/recycle/' + 'profile/' + userProfile().id">View Profile</a>
+            <a class="profile-link" (click)="viewProfile()">View Profile</a>
             <a class="profile-link" (click)="logout()">Wyloguj</a>
           </div>
         }
       } @else {
-        <button class="link profile" (click)="toggleLoginPopup($event)">
+        <button class="profile" (click)="toggleLoginPopup($event)">
           Zarejestruj się
-          
+          <svg [class]="[isLoginVisible() ? 'arrow-down' : '']" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M480-344 240-584l56-56 184 184 184-184 56 56-240 240Z"/></svg>
         </button>
         @if(isLoginVisible()) {
           <div class="profile-popup">

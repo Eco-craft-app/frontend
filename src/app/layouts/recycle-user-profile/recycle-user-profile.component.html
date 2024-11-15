@@ -1,1 +1,49 @@
-<p>recycle-user-profile works!</p>
+<section class="recycle-user-profile">
+  <div class="recycle-user-profile__header">
+    <div class="recycle-user-profile__info">
+      <div class="recycle-user-profile__avatar-box">
+        <img [src]="userProfile()?.avatarUrl" alt="user-avatar">
+      </div>
+      <div class="recycle-user-profile__info-box">
+        <p class="recycle-user-profile__username">{{ userProfile()?.userName }}</p>
+        @if(isSameUser()) {
+          <button class="recycle-main-btn edit-btn" [routerLink]="['/recycle', userProfile()?.userId, 'edit']" >Edytuj profil</button>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="recycle-user-profile__content">
+    @if (isSameUser()) {
+      <div class="project-links-box">
+        <a class="project-link" routerLink="projects" routerLinkActive="active">Twoje Projekty</a>
+        <a class="project-link" routerLink="liked" routerLinkActive="active">Polubione Projekty</a>
+      </div>
+    }
+    <router-outlet/>
+    <!-- <div class="recycle-user-profile__projects">
+      @for(project of userProjects(); track project.projectId) {
+        <app-project [projectData]="project" [isUserProfile]="true" [isSameUser]="isSameUser()"></app-project>
+      }
+    </div>
+    @if (totalPages() > 1) {
+      <div class="recycle-user-profile__arrows-box">
+        <button [class]="'recycle-user-profile__arrow ' + (pageNumber() === 1 ? 'disable' : '')" (click)="pageNumber() === 1 ? null : prevFirstPage()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M160-240H80v-480h80v480Zm320 0L240-480l240-240 56 56-143 144h487v80H393l144 144-57 56Z"/></svg>
+        </button>
+        <button [class]="'recycle-user-profile__arrow ' + (pageNumber() === 1 ? 'disable' : '')" (click)="pageNumber() === 1 ? null : prevPage()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M360-200 80-480l280-280 56 56-183 184h647v80H233l184 184-57 56Z"/></svg>
+        </button>
+        @for(page of shownArrayPages; track $index) {
+          <button [class]="'recycle-user-profile__page ' + (pageNumber() === page ? 'active' : '')" (click)="changePage(page)">{{ page }}</button>
+        }
+        <button [class]="'recycle-user-profile__arrow ' + (pageNumber() === numberOfPages() ? 'disable' : '')" (click)="pageNumber() === numberOfPages() ? null : nextPage()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000"><path d="m600-200-57-56 184-184H80v-80h647L544-704l56-56 280 280-280 280Z"/></svg>
+        </button>
+        <button [class]="'recycle-user-profile__arrow ' + (pageNumber() === numberOfPages() ? 'disable' : '')" (click)="pageNumber() === numberOfPages() ? null : nextLastPage()">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M800-240v-480h80v480h-80Zm-320 0-57-56 144-144H80v-80h487L424-664l56-56 240 240-240 240Z"/></svg>
+        </button>
+      </div>
+    } -->
+  </div>
+
+</section>

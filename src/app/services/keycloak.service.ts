@@ -14,11 +14,17 @@ export class KeycloakOperationService {
     window.location.href = registerUrl;
   }
 
+  async updateToken() {
+    await this.keycloak.updateToken();
+  }
+
   isLoggedIn(): boolean {
     return this.keycloak.isLoggedIn();
   }
   logout(): void {
     this.keycloak.logout('http://localhost:4200/recycle');
+    localStorage.removeItem('isProfileSet');
+    localStorage.removeItem('userToken');
   }
   async getUserProfile() {
     const profile = await this.keycloak.loadUserProfile();

@@ -13,6 +13,7 @@ export class UserService {
   haveSetProfile = signal<boolean>(true)
   userInfo = signal<UserKeycloakProfile | undefined>(undefined)
   url = 'https://localhost:5001/api/users/'
+  isSameUser = signal<boolean>(false)
 
   async ngOnInit() {
     this.userInfo.set(await this.keycloakService.getUserProfile() as UserKeycloakProfile)
@@ -20,24 +21,41 @@ export class UserService {
   }
 
   getUserProfile(id: string) {
-    return this.httpClient.get(`${this.url}${id}`)
+    let token = undefined;
+    const tokenJSON = localStorage.getItem('userToken');
+    if (tokenJSON !== 'undefined' && tokenJSON !== null && tokenJSON !== undefined) {
+      token = JSON.parse(tokenJSON!);
+    }
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+    return this.httpClient.get(`${this.url}${id}`, {headers})
   }
 
   updateUserProfile(data: any) {
-    const token = localStorage.getItem('userToken')
+    let token = undefined;
+    const tokenJSON = localStorage.getItem('userToken');
+    if (tokenJSON !== 'undefined' && tokenJSON !== null && tokenJSON !== undefined) {
+      token = JSON.parse(tokenJSON!);
+    }
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${JSON.parse(token!)}` // Include your auth token
+      'Authorization': `Bearer ${token}` // Include your auth token
     };
     console.log(headers)
     return this.httpClient.put(this.url + 'profile', data, {headers})
   }
 
   addUserProfile(data: any) {
-    const token = localStorage.getItem('userToken')
+    let token = undefined;
+    const tokenJSON = localStorage.getItem('userToken');
+    if (tokenJSON !== 'undefined' && tokenJSON !== null && tokenJSON !== undefined) {
+      token = JSON.parse(tokenJSON!);
+    }
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${JSON.parse(token!)}` // Include your auth token
+      'Authorization': `Bearer ${token}` // Include your auth token
     };
     console.log(headers)
     return this.httpClient.post(this.url + 'profile', data, {headers})

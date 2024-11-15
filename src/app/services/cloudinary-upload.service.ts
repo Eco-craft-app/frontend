@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
 
 declare global {
   interface Window {
@@ -10,6 +11,8 @@ declare global {
   providedIn: 'root'
 })
 export class CloudinaryUploadService {
+  private httpClient = inject(HttpClient)
+
   cloudinaryName = 'recycle'
   cloudinaryPreset = 'new-project'
   imagesInfo = signal<any>([])
@@ -47,5 +50,11 @@ export class CloudinaryUploadService {
       }
     })
     this.myWidget.open()
+  }
+
+
+  async uploadImage(vals: any) {
+    let data = vals
+    return await this.httpClient.post('https://api.cloudinary.com/v1_1/recycle/image/upload', data)
   }
 }

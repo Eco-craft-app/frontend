@@ -1,0 +1,10 @@
+<div class="comment">
+  <div class="comment__header">
+    <div class="comment__avatar-box"><img [src]="commentData().userAvatarUrl" alt="user-avatar" /></div>
+    <div class="comment__userInfo">
+      <p>{{ commentData().userName }}</p>
+      <p>{{ commentData().createdAt | date:'MMMM d, yyyy':'GMT+1':'pl' }}</p>
+    </div>
+  </div>
+  <p class="comment__content">{{ commentData().content }}</p>
+</div>

@@ -1,0 +1,42 @@
+<div class="project-com">
+  <form
+    class="project-com__form"
+    [formGroup]="form"
+    (ngSubmit)="isProfileSet ? onAddComment() : null"
+  >
+    @if(!isProfileSet) { @if(!isLoggedIn) {
+    <p class="profileNotSet">
+      Zaloguj się i ustaw swój profil, żeby móc dodać komentarz
+    </p>
+    } @else {
+    <p class="profileNotSet">
+      Najpierw ustaw swój profil, żeby móc dodać komentarz
+    </p>
+    } }
+    <div [class]="['project-com__input-box', (!isProfileSet && !isLoggedIn) ? 'disabled' : '']">
+      @if(isProfileSet) {
+      <div class="project-com__avatar-box">
+        <img [src]="userInfo()?.avatarUrl" alt="user-avatar" />
+      </div>
+      }
+      <div class="text-box">
+        <textarea
+          (input)="onInput()"
+          placeholder="Zostaw komentarz..."
+          formControlName="comment"
+          [maxlength]="maxChars"
+        ></textarea>
+        <span class="count">{{ charCount() }} / {{ maxChars }}</span>
+      </div>
+    </div>
+    <button [class]="[(!isProfileSet && !isLoggedIn) ? 'btnDisabled' : '']" type="submit">
+      Post
+    </button>
+  </form>
+
+  <div class="project-com__comments">
+    @for (comment of comments(); track comment.commentId) {
+    <app-comment [commentData]="comment" />
+    }
+  </div>
+</div>

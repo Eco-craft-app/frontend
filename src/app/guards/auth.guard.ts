@@ -28,7 +28,7 @@ export class AuthGuard extends KeycloakAuthGuard {
     }
     if (!this.authenticated) {
       await this.keycloak.login({
-        redirectUri: `http://localhost:4200/recycle/your_username/edit`,
+        redirectUri: `http://localhost:4200/recycle`,
       });
       localStorage.removeItem('isProfileSet');
     }

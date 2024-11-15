@@ -30,6 +30,8 @@ export class RecycleUserEditComponent {
   profileInfo = JSON.parse(localStorage.getItem('isProfileSet')!);
   profileData = signal<any>(undefined);
   imageUrlString = signal<string | null>(null);
+  // defaultUserAvatar = 'https://res.cloudinary.com/recycle/image/upload/v1731586010/default-user-recycle_flents.webp'
+  defaultUserAvatar = 'https://res.cloudinary.com/recycle/image/upload/v1731617035/default-user-circle_pyln48.png'
 
   ngAfterViewnInit() {
     console.log(this.form);
@@ -41,7 +43,7 @@ export class RecycleUserEditComponent {
   }
 
   Cancel() {
-    this.router.navigate(['/recycle']);
+    this.router.navigate(['/recycle', 'profile', this.profileData().userId, 'projects']);
   }
 
   async ngOnInit() {
@@ -155,7 +157,7 @@ export class RecycleUserEditComponent {
     const profileJSON = localStorage.getItem('userInfoData');
     const profileData = JSON.parse(profileJSON!);
     const userProfileData = {
-      avatarUrl: avatar !== undefined ? avatar : this.imageUrlString(),
+      avatarUrl: avatar !== undefined ? avatar : this.defaultUserAvatar,
       location: this.form.get('location')?.value,
       userName: profileData.username,
       bio: this.form.get('bio')?.value,

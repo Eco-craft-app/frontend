@@ -1,3 +1,5 @@
+@import '../../sass/abstracts/mixins';
+
 :host {
   display: flex;
   align-items: center;
@@ -9,13 +11,11 @@
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  margin: 0 auto;
-  margin: 10rem 3rem 3rem 3rem;
+  margin: 0 3rem 0 3rem;
   background: #eee;
   border-radius: 10px;
   border: 2px solid var(--color-green-mint);
   width: 100%;
-  max-width: 1100px;
   color: #111;
 
   &__header {
@@ -126,6 +126,13 @@
     max-height: 500px;
     overflow: hidden;
     padding: 1.5rem 2rem;
+
+    // @include respond(big-phone) {
+    //   flex-direction: column;
+    //   align-items: center;
+    //   justify-content: flex-start;
+    //   max-height: 900px;
+    // }
   }
   &__gallery-show-photo {
     display: flex;
@@ -136,6 +143,11 @@
     position: relative;
     background: rgb(212, 212, 212);
     border-radius: 10px;
+
+    // @include respond(big-phone) {
+    //   width: 100%;
+    //   min-height: 400px;
+    // }
 
     & img {
       width: 100%;
@@ -193,6 +205,16 @@
     cursor: pointer;
     transition: background 0.2s;
 
+    @include respond(tab-port) {
+      padding: 14px;
+      left: 7%;
+
+      & svg {
+        width: 16px;
+        height: auto;
+      }
+    }
+
     &:hover {
       background: #fff;
     }
@@ -208,5 +230,69 @@
 
   .right-arrow {
     left: 96%;
+
+    @include respond(tab-port) {
+      left: 93%;
+    }
+  }
+
+  &__userBtns {
+    align-self: flex-start;
+
+    & button:nth-child(2) {
+      margin-left: 1.5rem;
+    }
+  }
+}
+
+.likes {
+  font-variation-settings:
+  'FILL' 1;
+}
+
+.edit-btn {
+  margin-top: 1.5rem;
+}
+
+.recycle-project-info-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3rem;
+  margin: 10rem 3rem 3rem 3rem;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.links {
+  margin: 0;
+  border: none;
+
+  & nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid var(--bg-prim-nav);
+    padding: 2.25rem 2rem;
+    gap: 3rem;
+
+    & a {
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+      color: #222222c0;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s;
+
+      &:hover {
+        color: #222;
+      }
+    }
+  }
+
+  .link {
+    color: #000 !important;
   }
 }

@@ -1,21 +1,76 @@
 <div class="project">
   <div class="project__img-container" (click)="projectRedirect($event)">
-    <img [src]="projectData().photoUrl" alt="project-img">
+    <img [src]="projectData().photoUrl" alt="project-img" />
     <div class="avatar-box project-icon">
-      <img [src]="projectData().userAvatarUrl" alt="user-profile" (click)="userProfileRedirect()">
-      <a class="username" [routerLink]="['/recycle', 'profile', projectData().userId]">{{ projectData().userName }}</a>
+      <img
+        [src]="projectData().userAvatarUrl"
+        alt="user-profile"
+        (click)="userProfileRedirect()"
+      />
+      <a
+        class="username"
+        [routerLink]="['/recycle', 'profile', projectData().userId, 'projects']"
+        >{{ projectData().userName }}</a
+      >
     </div>
-    <div class="likes-box project-icon" (click)="toggleLike()" [routerLink]="['/recycle']">
-      <span [class]="['likes-box__icon', 'material-symbols-outlined', projectData().isLikedByTheCurrentUser === true ? 'liked' : '']" >
+    <div
+      class="likes-box project-icon"
+      (click)="!isToggling() ? toggleLike() : null"
+    >
+      @if (!isToggling()) {
+      <span
+        [class]="[
+          'likes-box__icon',
+          'material-symbols-outlined',
+          projectData().isLikedByCurrentUser && isLoggedIn ? 'likes' : ''
+        ]"
+      >
         favorite
       </span>
-      <span class="likes-box__count">{{ projectData().likeCount | shortenNumber }}</span>
+      <span class="likes-box__count">{{
+        projectData().likeCount | shortenNumber
+      }}</span>
+      } @else {
+      <div class="spinner project-spinner"></div>
+      }
     </div>
-    <div class="comment-box project-icon">
-      <svg class="comment" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M880-80 720-240H320q-33 0-56.5-23.5T240-320v-40h440q33 0 56.5-23.5T760-440v-280h40q33 0 56.5 23.5T880-640v560ZM160-473l47-47h393v-280H160v327ZM80-280v-520q0-33 23.5-56.5T160-880h440q33 0 56.5 23.5T680-800v280q0 33-23.5 56.5T600-440H240L80-280Zm80-240v-280 280Z"/></svg>
+    <div class="comment-box project-icon" [routerLink]="['/recycle', 'project', projectData().projectId, 'comments']">
+      <svg
+        class="comment"
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+        fill="#e8eaed"
+      >
+        <path
+          d="M880-80 720-240H320q-33 0-56.5-23.5T240-320v-40h440q33 0 56.5-23.5T760-440v-280h40q33 0 56.5 23.5T880-640v560ZM160-473l47-47h393v-280H160v327ZM80-280v-520q0-33 23.5-56.5T160-880h440q33 0 56.5 23.5T680-800v280q0 33-23.5 56.5T600-440H240L80-280Zm80-240v-280 280Z"
+        />
+      </svg>
     </div>
+    @if(isSameUser() && isUserProfile() && isAllowedToDelete()) {
+    <div class="delete-project project-icon" (click)="!isDeleting() ? deleteProject() : null">
+      @if(!isDeleting()) {
+      <svg
+        class="delete"
+        xmlns="http://www.w3.org/2000/svg"
+        height="24px"
+        viewBox="0 -960 960 960"
+        width="24px"
+        fill="#e8eaed"
+      >
+        <path
+          d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"
+        />
+      </svg>
+
+      } @else {
+        <div class="spinner project-spinner"></div>
+      }
+    </div>
+    }
   </div>
-  <a class="project__title">{{ projectData().title }}</a>
+  <a class="project__title" [routerLink]="['/recycle', 'project', projectData().projectId]">{{ projectData().title }}</a>
 </div>
 
 <!-- <div class="project__heart-box">
