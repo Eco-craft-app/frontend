@@ -1,19 +1,314 @@
+@import "../../sass/abstracts/mixins";
+
 .chat {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
-  flex-direction: column;
-  max-width: 1100px;
+  max-width: 1350px;
   width: 100%;
+  height: 100vh;
   margin: 0 auto;
-  padding: 2rem 3rem;
-  margin-top: 7rem;
+  padding: 10rem 3rem 2rem 3rem;
   color: #111;
+  gap: 5rem;
+  overflow: hidden;
+  @include respond(tab-port) {
+    flex-direction: column-reverse;
+    gap: 0rem;
+  }
 
+  &__box-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 55%;
+    background-color: rgb(7, 116, 7);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
+  }
   &__box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    background-color: rgb(7, 116, 7);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+    position: relative;
+    width: 100%;
+
+    @include respond(tab-port) {
+      width: 100%;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 1.5rem 2rem;
+    background-color: rgb(7, 78, 7);
+    color: #fff;
+    font-size: 2.6rem;
+    font-weight: 600;
+
+    @include respond(tab-port) {
+      font-size: 3.2rem;
+      padding: 2.5rem 3.5rem;
+    }
+
+    & > p {
+      text-align: center;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    padding: 1rem 2rem;
+    gap: 1.1rem;
+    overflow-y: auto;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      width: 8px; /* Szerokość scrollbara */
+    }
+
+    &::-webkit-scrollbar-track {
+      margin-top: 1rem; /* Odstęp od góry tracku scrollbara */
+      margin-bottom: 1rem;
+      margin-right: 0.5rem;
+      background: transparent; /* Kolor tła scrollbara */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #39d12f; /* Zielony kolor scrollbara */
+      border-radius: 10px; /* Zaokrąglenie */
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #34ae27; /* Ciemniejszy zielony kolor po najechaniu */
+    }
+
+    &::-webkit-scrollbar-button {
+      display: none; /* Ukryj strzałki scrollbara */
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  &__imageUpload-box {
+    width: 100%;
+    height: 100%;
+
+    & input {
+      display: none;
+    }
+
+    & label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 1.5rem 2rem;
+      background: rgb(4, 167, 4);
+      transition: background 0.3s;
+      cursor: pointer;
+
+      & svg {
+        height: 32px;
+        width: 32px;
+        transition: all 0.2s;
+      }
+
+      &:hover {
+        background: rgb(1, 146, 1);
+      }
+      &:hover svg {
+        fill: #bbb;
+        transform: scale(1.1);
+        font-variation-settings: "FILL" 1;
+      }
+    }
+  }
+
+  &__info {
+    width: 40%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    height: 100%;
+    gap: 3rem;
+
+    @include respond(tab-port) {
+      height: auto;
+      width: 100%;
+      position: relative;
+    }
   }
+
+  &__info-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 2.5rem;
+    height: 100%;
+
+    @include respond(tab-port) {
+      display: none;
+    }
+  }
+
+  &__info-imgBox {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    justify-self: flex-end;
+    align-self: flex-end;
+    margin: 0 auto;
+
+    @include respond(tab-land) {
+      width: 100%;
+      margin: 0;
+      margin-bottom: 3rem;
+    }
+
+    @include respond(tab-port) {
+      margin: 0;
+      margin-bottom: 3rem;
+    }
+
+    & a {
+      display: none;
+      width: 100%;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      background: #028e15;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 2.2rem;
+      transition: background 0.3s;
+
+      @include respond(tab-port) {
+        display: block;
+      }
+
+      &:hover {
+        background: #026d0f;
+      }
+    }
+
+    @include respond(tab-port) {
+      width: 32%;
+      justify-self: flex-start;
+      align-self: flex-start;
+    }
+
+    @include respond(big-phone) {
+      width: 40%;
+    }
+
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__info-chatImgBox {
+    display: none;
+    width: 25%;
+    position: absolute;
+    right: 0;
+    bottom: -.4rem;
+
+    @include respond(tab-port) {
+      display: block;
+    }
+
+    & img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__info-header {
+    width: 100%;
+
+    & a {
+      display: block;
+      width: 100%;
+      padding: 2rem 2.5rem;
+      text-align: center;
+      background: #028e15;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 2.2rem;
+      transition: background 0.3s;
+
+      &:hover {
+        background: #026d0f;
+      }
+    }
+  }
+
+  &__info-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 2rem;
+    width: 90%;
+    padding: 2rem 2.5rem;
+    text-align: center;
+    background: #028e15;
+    border-radius: 14px;
+    color: #fff;
+    font-size: 2.2rem;
+
+    & p {
+      text-align: left;
+
+      &:nth-child(2) {
+        font-size: 2.6rem;
+        font-weight: 600;
+      }
+    }
+
+    & svg {
+      height: 32px;
+      width: 32px;
+      fill: #fff;
+      transition: all 0.2s;
+    }
+  }
+}
+
+.wait {
+  font-size: 1.7rem;
+  color: #eee;
+  font-weight: 600;
 }

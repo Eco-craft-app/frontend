@@ -1,1 +1,75 @@
-<p>chat-content works!</p>
+
+  <div [class]="['chat-content', isUserMessage() ? 'right' : 'center']">
+    @if (isUserMessage()) {
+      <div class="user">
+        <img [src]="userMessage()?.Photo_URL" alt="userPhoto">
+      </div>
+    } @else {
+      <div class="bot__firstMessage">
+        @if(!isUploading()) {
+          <div class="bot__firstMessage-header">
+            <p class="bot__firstMessage-title">To bardzo proste</p>
+            <!-- <p class="bot__firstMessage-subTitle">{{ botMessage()?.explanation }}</p> -->
+            <div class="bot__firstMessage-trashes">
+              @for (url of binUrls(); track $index) {
+                <div class="trash-box">
+                  <div class="bot-image-box">
+                    <img [src]="url" alt="bin-image">
+                  </div>
+                  @for (item of trashBins()[$index]; track $index) {
+                    <p class="bin-items">{{ item.item }}</p>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+          @if(!descriptionInfo()) {
+            @if(!isGettingMoreInfo()) {
+              <div class="bot__firstMessage-buttons">
+                <button class="bot__firstMessage-button" (click)="showAllInfo()">Co mogę z tego zrobić?</button>
+                <button class="bot__firstMessage-button" routerLink="/recycle">Dzięki to wszystko</button>
+              </div>
+            } @else {
+              <div style="display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: column;
+              gap: .5rem;">
+                <div class="spinner">
+                </div>
+                <p class="wait">Proszę czekać...</p>
+              </div>
+            }
+          } @else {
+            <div class="more-info">
+              @for (info of descriptionInfo(); track $index) {
+                <div class="info-box">
+                  <p class="info-box-title">{{ info.project }}</p>
+                  <p class="info-box-desc">{{ info.description }}</p>
+                </div>
+              }
+            </div>
+          }
+        } @else {
+          <div>
+            <div class="spinner">
+            </div>
+            <p class="wait">Please wait...</p>
+          </div>
+        }
+
+        
+        <!-- <p class="bot__header"><span>Przedmiot: </span>{{ botMessage()?.item }}</p>
+        <div class="bot__content">
+          <div class="bot__content-todo">
+            <p>Co możesz zrobić:</p>
+            <p>{{ botMessage()?.explanation }}</p>
+          </div>
+          <div class="bot__content-trash">
+            <p>Gdzie wyrzucić:</p>
+            <p>{{ botMessage()?.bin }}</p>
+          </div>
+        </div> -->
+      </div>
+    }
+  </div>

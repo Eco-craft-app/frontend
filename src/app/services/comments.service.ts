@@ -13,7 +13,8 @@ export class CommentsService {
   private comments = signal<Comment[]>([]);
   private httpClient = inject(HttpClient);
   page = signal<string>('1');
-  pageSize = signal<string>('5');
+  pageSize = signal<string>('7');
+  totalPages = signal<number>(1);
   allComments = this.comments.asReadonly();
   isLoggedIn = this.keycloakService.isLoggedIn();
   isProfileSet = localStorage.getItem('isProfileSet')
@@ -26,6 +27,10 @@ export class CommentsService {
 
   updateAllComments(comments: Comment[]) {
     this.comments.set(comments)
+  }
+
+  updateCommentsData(comments: Comment[]) {
+    this.comments.update(prev => [...prev, ...comments])
   }
 
   getComments(projectId: string) {

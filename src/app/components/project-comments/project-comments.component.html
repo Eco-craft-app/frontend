@@ -39,4 +39,10 @@
     <app-comment [commentData]="comment" />
     }
   </div>
+
+  @if (totalPages() > page()) {
+  <div class="project-com__load-more">
+    <button (click)="onAddAnotherComments()">Załaduj więcej</button>
+  </div>
+  }
 </div>

@@ -48,6 +48,8 @@ export class ProjectCommentsComponent {
   isProfileSet = localStorage.getItem('isProfileSet') === 'true';
   charCount = signal<number>(0);
   maxChars = 500;
+  totalPages = computed(() => this.commentsService.totalPages());
+  page = computed(() => Number(this.commentsService.page()));
 
   form = new FormGroup({
     comment: new FormControl('', [
@@ -60,6 +62,22 @@ export class ProjectCommentsComponent {
     if (!this.isProfileSet) {
       this.form.get('comment')?.disable();
     }
+  }
+
+  onAddAnotherComments() {
+    this.commentsService.page.set((+this.commentsService.page() + 1).toString());
+    this.commentsService
+      .getComments(this.id())
+      .subscribe({
+        next: (comments) => {
+          console.log(comments);
+          const commentsData = comments as { items: Comment[], totalPages: number };
+          this.commentsService.updateCommentsData(commentsData.items as Comment[]);
+          this.commentsService.totalPages.set(commentsData.totalPages);
+          console.log(this.commentsService.totalPages())
+        },
+      });
+      window.scrollTo(0, window.innerHeight);
   }
 
   ngOnInit() {
@@ -77,8 +95,10 @@ export class ProjectCommentsComponent {
     const sub2 = this.commentsService.getComments(this.id()).subscribe({
       next: (comments) => {
         console.log(comments);
-        const commentsData = comments as { items: Comment[] };
+        const commentsData = comments as { items: Comment[], totalPages: number };
         this.commentsService.updateAllComments(commentsData.items as Comment[]);
+        this.commentsService.totalPages.set(commentsData.totalPages);
+        console.log(this.commentsService.totalPages())
       },
     });
   }
